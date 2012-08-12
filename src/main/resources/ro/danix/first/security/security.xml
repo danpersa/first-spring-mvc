@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Application context containing authentication, channel
+  - security and web URI beans.
+  -
+  - Only used by "filter" artifact.
+  -
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+
+    <bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+        <constructor-arg>
+            <list>
+                <sec:filter-chain pattern="/restful/**" filters="
+                    exceptionTranslationFilter,
+                    filterSecurityInterceptor" />
+                <sec:filter-chain pattern="/**" filters="
+                    logoutFilter,
+                    securityContextPersistenceFilter,
+                    authenticationProcessingFilter,
+                    anonymousFilter,
+                    exceptionTranslationFilter,
+                    filterSecurityInterceptor" />
+            </list>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="filterSecurityInterceptor"
+          class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+<!--        <property name="securityMetadataSource" ref="mySecureResourceFilter"/>-->
+        <property name="securityMetadataSource">
+            <sec:filter-security-metadata-source>
+                <sec:intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                <sec:intercept-url pattern="/secured-user.html" access="ROLE_USER"/>
+                <sec:intercept-url pattern="/secured-anonymous.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                <sec:intercept-url pattern="/secure/super/**" access="ROLE_WE_DONT_HAVE"/>
+                <sec:intercept-url pattern="/secure/**" access="ROLE_SUPERVISOR,ROLE_TELLER"/>
+            </sec:filter-security-metadata-source>
+        </property>
+    </bean>
+
+    
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <property name="allowIfAllAbstainDecisions" value="false"/>
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter" />
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref bean="authenticationProvider"/>
+                <ref bean="anonymousProvider" />
+            </list>
+        </property>
+    </bean>
+    
+    <util:properties id="userProperties" location="classpath:users.properties"/>
+
+
+<!--    <bean id="userDetailService" class="ro.danix.first.security.MyUserDetailService">
+        <property name="userProperties">
+            <util:properties location="classpath:users.properties" />
+        </property>
+    </bean>-->
+</beans>

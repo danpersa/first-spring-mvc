@@ -1,0 +1,49 @@
+<#macro defaultLayout>
+
+<#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
+<#import "../spring.ftl" as spring />
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Web Example</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="danix">
+
+		<!-- Le styles -->
+		<#include "stylesheets.xhtml"/>
+
+		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		<script src="assets/js/html5.js"></script>
+		<![endif]-->
+
+	</head>
+
+	<body data-spy="scroll" data-target=".subnav" data-offset="50">
+
+
+		<!---------------------- Navbar --------------------------->
+		<#include "navbar.xhtml"/>
+
+		<div class="container">
+
+			<!-------------------- Masthead --------------------------->
+			<#include "header.xhtml"/>
+
+			<#nested/>
+
+			<!-------------------- Footer ----------------------------->
+			<#include "footer.xhtml"/>
+
+		</div><!-- /container -->
+
+		<!-------------------- Le javascript ----------------------->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<#include "javascripts.xhtml"/>
+
+	</body>
+</html>
+</#macro>
