@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ro.danix.first.model.businessobject.User;
+import ro.danix.first.model.domain.User;
 import ro.danix.first.model.service.UserService;
 
 /**
@@ -46,7 +46,7 @@ public class UserController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newForm(Model model) {
-        model.addAttribute(new User());
+        model.addAttribute(new User("", ""));
         return "users/new";
     }
 

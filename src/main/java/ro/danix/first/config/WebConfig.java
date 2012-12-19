@@ -53,7 +53,7 @@ import ro.danix.first.model.service.UserService;
  * {@code @EnableWebMvc} is sufficient.
  *
  */
-@Configuration
+//@Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
 
     @Autowired

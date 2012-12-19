@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
  *
  * @author Dan Persa
  */
-@Configuration
+//@Configuration
 public class SecurityAuthentication {
 
     @Autowired

@@ -22,11 +22,9 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
  *
  * @author Dan Persa
  */
-@Configuration
-@ImportResource({
-    //    "classpath:ro/danix/first/security/common-authorization.xml",
-    //    "classpath:ro/danix/first/security/common-business.xml",
-    "classpath:ro/danix/first/security/security.xml"})
+//@Configuration
+//@ImportResource({
+//    "classpath:ro/danix/first/security/security.xml"})
 public class SecurityFilters {
 
     @Autowired
