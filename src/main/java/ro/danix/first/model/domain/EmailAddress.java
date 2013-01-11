@@ -2,6 +2,7 @@ package ro.danix.first.model.domain;
 
 import java.util.regex.Pattern;
 import javax.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Gierke
  */
+@EqualsAndHashCode
 public final class EmailAddress {
 
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -45,25 +47,5 @@ public final class EmailAddress {
     @Override
     public String toString() {
         return value;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof EmailAddress)) {
-            return false;
-        }
-
-        EmailAddress that = (EmailAddress) obj;
-        return this.value.equals(that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
     }
 }

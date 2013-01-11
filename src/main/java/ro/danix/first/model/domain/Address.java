@@ -1,5 +1,6 @@
 package ro.danix.first.model.domain;
 
+import lombok.Getter;
 import org.springframework.util.Assert;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.util.Assert;
  */
 public class Address {
 
+    @Getter
     private final String street, city, country;
 
     /**
@@ -37,17 +39,5 @@ public class Address {
      */
     public Address getCopy() {
         return new Address(this.street, this.city, this.country);
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getCountry() {
-        return country;
     }
 }

@@ -11,9 +11,11 @@ public interface UserService {
 
     List<User> all();
 
-    User get(Long id);
+    User findOne(Long id);
 
     User save(User user);
 
     boolean destroy(User user);
+    
+    void follow(User user, User follower);
 }

@@ -1,8 +1,11 @@
 # Technology Stack
-The project uses the following technologies: <br/>
-- **web/REST**: Spring 3.1.2 <br/>
+
+The project uses the following technologies:
+
+- **web/REST**: Spring 3.1.2
 - **view**: Freemarker
-- **marshalling**: Jackson (for JSON) and XStream (for XML) <br/>
-- **persistence**: Mongo DB <br/>
+- **marshalling**: Jackson (for JSON) and XStream (for XML)
+- **persistence**: Mongo DB
 - **security**: Spring Security 3.1.2
-- **testing**: Junit, Hamcrest, Mockito, rest-assured <br/>
+- **testing**: Junit, Hamcrest, Mockito, rest-assured
+- **utils**: Lombok

@@ -16,6 +16,6 @@ public class UserConverter implements Converter<String, User> {
 
     @Override
     public User convert(String source) {
-        return this.userService.get(new Long(source));
+        return this.userService.findOne(new Long(source));
     }
 }

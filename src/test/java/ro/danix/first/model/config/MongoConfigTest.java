@@ -4,14 +4,16 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ro.danix.first.model.config.MongoConfig;
+import ro.danix.test.SlowRunningTests;
 
 /**
  *
  * @author danix
  */
+@Category({SlowRunningTests.class})
 public class MongoConfigTest {
 
     @Test

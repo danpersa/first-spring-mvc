@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
  * @author Dan Persa
  */
 @Configuration
-@ComponentScan("ro.danix.first.model")
+@ComponentScan({"ro.danix.first.model", "ro.danix.first.exception"})
 public class MongoConfig extends AbstractMongoConfiguration {
 
     public static final String DATABASE_NAME = "first-spring-mvc-dev";

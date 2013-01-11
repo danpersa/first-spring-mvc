@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
@@ -50,7 +51,9 @@ import ro.danix.first.model.service.UserService;
  * {@code RequestMappingHandlerAdapter}, etc.
  *
  * <p>Typically extending from {@link WebMvcConfigurerAdapter} and adding
- * {@code @EnableWebMvc} is sufficient.
+ * {@code
+ *
+ * @EnableWebMvc} is sufficient.
  *
  */
 //@Configuration
@@ -58,6 +61,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
     @Autowired
     private ApplicationConfig applicationConfig;
+
     @Autowired
     private UserService userService;
 

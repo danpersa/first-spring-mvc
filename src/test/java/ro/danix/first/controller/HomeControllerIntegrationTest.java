@@ -9,6 +9,7 @@ import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
 import ro.danix.first.config.ApplicationConfig;
 import ro.danix.first.config.WebConfig;
+import ro.danix.first.model.config.MongoConfig;
 import ro.danix.test.SlowRunningTests;
 
 /**
@@ -22,7 +23,8 @@ public class HomeControllerIntegrationTest {
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.annotationConfigSetup(ApplicationConfig.class, WebConfig.class).configureWebAppRootDir("src/main/webapp", false).build();
+        this.mockMvc = MockMvcBuilders.annotationConfigSetup(ApplicationConfig.class, WebConfig.class, MongoConfig.class)
+                .configureWebAppRootDir("src/main/webapp", false).build();
     }
 
     @Test
