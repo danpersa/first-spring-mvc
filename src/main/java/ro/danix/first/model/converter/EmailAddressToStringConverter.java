@@ -6,7 +6,7 @@ import ro.danix.first.model.domain.EmailAddress;
 
 /**
  *
- * @author dpersa
+ * @author danix
  */
 @Component
 public class EmailAddressToStringConverter implements Converter<EmailAddress, String> {
