@@ -6,7 +6,7 @@ import ro.danix.first.model.domain.user.User;
 
 /**
  *
- * @author Dan Persa
+ * @author danix
  */
 public interface UserRepository extends Repository<User, Long> {
 

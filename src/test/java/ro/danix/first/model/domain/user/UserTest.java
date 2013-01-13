@@ -1,8 +1,8 @@
 package ro.danix.first.model.domain.user;
 
-import ro.danix.first.model.domain.user.User;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
+import ro.danix.first.model.domain.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

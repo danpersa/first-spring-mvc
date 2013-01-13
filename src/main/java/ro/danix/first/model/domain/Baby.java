@@ -1,9 +1,11 @@
 package ro.danix.first.model.domain;
 
-import java.util.Calendar;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.joda.time.DateTime;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import ro.danix.first.model.domain.user.BabyParent;
 
 /**
  *
@@ -11,11 +13,24 @@ import lombok.Setter;
  */
 @EqualsAndHashCode(callSuper=true)
 public class Baby extends AbstractDocument {
-
+    
     @Getter
     @Setter
     private String name;
     @Getter
     @Setter
-    private Calendar birthDate;
+    private DateTime birthDate;
+    @Getter
+    @Setter
+    @DBRef
+    private BabyParent babyParent;
+
+    public Baby(String name, DateTime birthDate) {
+        this.name = name;
+        this.birthDate = birthDate;
+    }
+    
+    protected Baby() {
+        
+    }
 }

@@ -23,7 +23,6 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
 public class MongoConfig extends AbstractMongoConfiguration {
 
     public static final String DATABASE_NAME = "first-spring-mvc-dev";
-
     @Autowired
     private List<Converter<?, ?>> converters;
 
