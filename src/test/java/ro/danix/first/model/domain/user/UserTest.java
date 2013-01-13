@@ -1,10 +1,12 @@
-package ro.danix.first.model.domain;
+package ro.danix.first.model.domain.user;
 
+import ro.danix.first.model.domain.user.User;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ro.danix.first.model.domain.Address;
 import ro.danix.test.FastRunningTests;
 
 /**
@@ -18,7 +20,7 @@ public class UserTest {
     @Test
     public void addTest() {
         log.info("start addTest");
-        Address address = new Address("street", "city", "country");
+        Address address = new Address("street", "city", "state", "country", "zipCode");
         User instance = new User();
         instance.add(address);
         assertThat(instance.getAddresses(), hasItem(address));

@@ -18,7 +18,7 @@ import ro.danix.first.model.config.MongoConfig;
 import ro.danix.first.model.domain.Address;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.Profile;
-import ro.danix.first.model.domain.User;
+import ro.danix.first.model.domain.user.User;
 import ro.danix.test.SlowRunningTests;
 
 /**
@@ -59,7 +59,7 @@ public class UserRepositoryIntegrationTest {
         User user1 = new User("danix1", new EmailAddress("danix1@yahoo.com"));
         user1.setFirstname("dan1");
         user1.setLastname("ix1");
-        user1.add(new Address("street", "city", "country"));
+        user1.add(new Address("street", "city", "state", "", ""));
         user1.setProfile(new Profile("name", "website"));
         user1.addFollower(savedUser);
         user1.addFollowing(savedUser);
@@ -91,7 +91,7 @@ public class UserRepositoryIntegrationTest {
         User user = new User("danix", new EmailAddress(EMAIL));
         user.setFirstname(FIRST_NAME);
         user.setLastname(LAST_NAME);
-        user.add(new Address("street", "city", "country"));
+        user.add(new Address("street", "city", "state", "contry", "zipCode"));
         user.setProfile(new Profile("name", "website"));
         return user;
     }

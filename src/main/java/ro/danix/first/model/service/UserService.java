@@ -1,7 +1,7 @@
 package ro.danix.first.model.service;
 
 import java.util.List;
-import ro.danix.first.model.domain.User;
+import ro.danix.first.model.domain.user.User;
 
 /**
  *

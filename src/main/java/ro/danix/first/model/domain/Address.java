@@ -6,12 +6,12 @@ import org.springframework.util.Assert;
 /**
  * An address.
  *
- * @author Oliver Gierke
+ * @author danix
  */
 public class Address {
 
     @Getter
-    private final String street, city, country;
+    private final String street, city, state, country, zipCode;
 
     /**
      * Creates a new {@link Address} from the given street, city and country.
@@ -20,15 +20,20 @@ public class Address {
      * @param city must not be {@literal null} or empty.
      * @param country must not be {@literal null} or empty.
      */
-    public Address(String street, String city, String country) {
+    public Address(String street, String city, String state, String country, 
+            String zipCode) {
 
         Assert.hasText(street, "Street must not be null or empty!");
         Assert.hasText(city, "City must not be null or empty!");
+        Assert.hasText(state, "State must not be null or empty!");
         Assert.hasText(country, "Country must not be null or empty!");
+        Assert.hasText(zipCode, "Zip code must not be null or empty!");
 
         this.street = street;
         this.city = city;
+        this.state = state;
         this.country = country;
+        this.zipCode = zipCode;
     }
 
     /**
@@ -38,6 +43,6 @@ public class Address {
      * @return
      */
     public Address getCopy() {
-        return new Address(this.street, this.city, this.country);
+        return new Address(this.street, this.city, this.state, this.country, this.zipCode);
     }
 }

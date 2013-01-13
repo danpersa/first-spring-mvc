@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.danix.first.exception.ExceptionUtils;
-import ro.danix.first.model.domain.User;
+import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.repository.UserRepository;
 import ro.danix.first.model.service.UserService;
 

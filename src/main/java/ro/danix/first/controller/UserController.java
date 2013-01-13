@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ro.danix.first.model.domain.EmailAddress;
-import ro.danix.first.model.domain.User;
+import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.service.UserService;
 
 /**

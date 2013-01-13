@@ -3,7 +3,7 @@ package ro.danix.first;
 import static org.hamcrest.Matchers.*;
 
 import org.hamcrest.Matcher;
-import ro.danix.first.model.domain.User;
+import ro.danix.first.model.domain.user.User;
 
 /**
  * Custom matchers to ease assertions on our domain classes.

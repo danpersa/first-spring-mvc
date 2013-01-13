@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  *
- * @author dpersa
+ * @author danix
  */
 public class Profile extends AbstractDocument {
 

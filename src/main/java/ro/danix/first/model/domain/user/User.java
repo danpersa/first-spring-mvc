@@ -1,4 +1,4 @@
-package ro.danix.first.model.domain;
+package ro.danix.first.model.domain.user;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,6 +15,10 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
+import ro.danix.first.model.domain.AbstractDocument;
+import ro.danix.first.model.domain.Address;
+import ro.danix.first.model.domain.EmailAddress;
+import ro.danix.first.model.domain.Profile;
 
 /**
  * @author danix
@@ -56,14 +60,12 @@ public class User extends AbstractDocument {
     private Set<User> followers = new HashSet<User>();
 
     @Getter
-    @Setter
     private Long followersCount = 0l;
 
     @DBRef
     private Set<User> following = new HashSet<User>();
 
     @Getter
-    @Setter
     private Long followingCount = 0l;
 
     private Set<Address> addresses = new HashSet<Address>();

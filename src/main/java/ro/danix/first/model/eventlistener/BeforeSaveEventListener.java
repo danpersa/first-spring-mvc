@@ -9,7 +9,7 @@ import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.stereotype.Component;
-import ro.danix.first.model.domain.User;
+import ro.danix.first.model.domain.user.User;
 
 /**
  *
