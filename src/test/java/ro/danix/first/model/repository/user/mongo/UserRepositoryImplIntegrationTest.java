@@ -1,4 +1,4 @@
-package ro.danix.first.model.repository.impl;
+package ro.danix.first.model.repository.user.mongo;
 
 import static org.hamcrest.Matchers.*;
 import static ro.danix.first.CoreMatchers.*;
@@ -17,12 +17,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ro.danix.first.model.config.FactoriesConfig;
 import ro.danix.first.model.config.MongoConfig;
-import ro.danix.first.model.domain.Address;
 import ro.danix.first.model.domain.EmailAddress;
-import ro.danix.first.model.domain.UserProfile;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.domain.user.factory.UserFactory;
-import ro.danix.first.model.repository.UserRepository;
+import ro.danix.first.model.repository.user.UserRepository;
 import ro.danix.test.SlowRunningTests;
 
 /**
@@ -53,12 +51,12 @@ public class UserRepositoryImplIntegrationTest {
 
     @Test
     public void saveTest() {
-        User user = buildUser();
+        User user = userFactory.build();
 
         userRepository.save(user);
         User savedUser = userRepository.findByEmailAddress(new EmailAddress((UserFactory.EMAIL)));
 
-        User user1 = buildUser();
+        User user1 = userFactory.build();
         user1.setUsername("danix1");
         user1.setEmailAddress(new EmailAddress("danix1@yahoo.com"));
         user1.setFirstname("dan1");
@@ -69,26 +67,23 @@ public class UserRepositoryImplIntegrationTest {
 
         User userWithFollower = userRepository.findByEmailAddress(new EmailAddress(("danix1@yahoo.com")));
         assertThat(savedUser, is(notNullValue()));
-        assertThat(savedUser, is(named(UserFactory.FIRST_NAME)));
+        assertThat(savedUser, is(firstNamed(UserFactory.FIRST_NAME)));
 
         assertThat(userWithFollower, is(notNullValue()));
-        assertThat(userWithFollower, is(named("dan1")));
-        assertThat(userWithFollower.getFollowers(), hasItem(named(UserFactory.FIRST_NAME)));
-        assertThat(userWithFollower.getFollowing(), hasItem(named(UserFactory.FIRST_NAME)));
+        assertThat(userWithFollower, is(firstNamed("dan1")));
+        assertThat(userWithFollower.getFollowers(), hasItem(firstNamed(UserFactory.FIRST_NAME)));
+        assertThat(userWithFollower.getFollowing(), hasItem(firstNamed(UserFactory.FIRST_NAME)));
     }
 
     @Test
-    public void findByNameTest() {
-        User user = buildUser();
+    public void findByEmailAddressTest() {
+        User user = userFactory.build();
         userRepository.save(user);
 
         EmailAddress emailAddress = new EmailAddress(UserFactory.EMAIL);
         user = userRepository.findByEmailAddress(emailAddress);
         assertThat(user, is(notNullValue()));
-        assertThat(user, is(named(UserFactory.FIRST_NAME)));
+        assertThat(user, is(firstNamed(UserFactory.FIRST_NAME)));
     }
 
-    private User buildUser() {
-        return userFactory.build();
-    }
 }

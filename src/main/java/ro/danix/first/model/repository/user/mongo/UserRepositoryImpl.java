@@ -1,4 +1,4 @@
-package ro.danix.first.model.repository.mongo;
+package ro.danix.first.model.repository.user.mongo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
-import ro.danix.first.model.repository.UserRepository;
+import ro.danix.first.model.repository.user.UserRepository;
 
 /**
  *

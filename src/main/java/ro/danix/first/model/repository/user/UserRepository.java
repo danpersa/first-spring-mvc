@@ -1,4 +1,4 @@
-package ro.danix.first.model.repository;
+package ro.danix.first.model.repository.user;
 
 import org.springframework.data.repository.Repository;
 import ro.danix.first.model.domain.EmailAddress;

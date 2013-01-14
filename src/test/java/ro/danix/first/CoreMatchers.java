@@ -3,32 +3,25 @@ package ro.danix.first;
 import static org.hamcrest.Matchers.*;
 
 import org.hamcrest.Matcher;
+import ro.danix.first.model.domain.Baby;
 import ro.danix.first.model.domain.user.User;
 
 /**
  * Custom matchers to ease assertions on our domain classes.
  *
- * @author Oliver Gierke
+ * @author danix
  */
 public class CoreMatchers {
 
-    /**
-     * Syntactic sugar to make Matchers more readable.
-     *
-     * @param matcher must not be {@literal null}.
-     * @return
-     */
     public static <T> Matcher<T> with(Matcher<T> matcher) {
         return matcher;
     }
 
-    /**
-     * Matches if the {@link Product} has the given name.
-     *
-     * @param firstname must not be {@literal null}.
-     * @return
-     */
-    public static Matcher<User> named(String firstname) {
+    public static Matcher<User> firstNamed(String firstname) {
         return hasProperty("firstname", is(firstname));
+    }
+    
+    public static Matcher<Baby> named(String firstname) {
+        return hasProperty("name", is(firstname));
     }
 }

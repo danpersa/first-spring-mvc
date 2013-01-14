@@ -13,7 +13,7 @@ public interface BabyRepository extends Repository<Baby, Long> {
 
     Baby findOne(Long id);
 
-    Baby save(Baby user);
+    Baby save(Baby baby);
 
     List<Baby> findByBabyParent(BabyParent babyParent);
 }
