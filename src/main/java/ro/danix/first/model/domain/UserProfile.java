@@ -6,7 +6,7 @@ import lombok.Getter;
  *
  * @author danix
  */
-public class Profile extends AbstractDocument {
+public class UserProfile extends AbstractDocument {
 
     @Getter
     private String name;
@@ -14,7 +14,7 @@ public class Profile extends AbstractDocument {
     @Getter
     private String website;
 
-    public Profile(String name, String website) {
+    public UserProfile(String name, String website) {
         this.name = name;
         this.website = website;
     }

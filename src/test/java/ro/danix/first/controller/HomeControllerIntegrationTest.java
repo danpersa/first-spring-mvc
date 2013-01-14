@@ -16,6 +16,7 @@ import ro.danix.test.SlowRunningTests;
  *
  * @author danix
  */
+@Ignore
 @Category({SlowRunningTests.class})
 public class HomeControllerIntegrationTest {
 

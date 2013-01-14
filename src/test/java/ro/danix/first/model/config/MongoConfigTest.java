@@ -2,7 +2,6 @@ package ro.danix.first.model.config;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.context.ApplicationContext;

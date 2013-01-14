@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 import ro.danix.first.model.domain.AbstractDocument;
 import ro.danix.first.model.domain.Address;
 import ro.danix.first.model.domain.EmailAddress;
-import ro.danix.first.model.domain.Profile;
+import ro.danix.first.model.domain.UserProfile;
 
 /**
  * @author danix
@@ -54,7 +54,7 @@ public class User extends AbstractDocument {
     @Field("profile")
     @Getter
     @Setter
-    private Profile profile;
+    private UserProfile userProfile;
 
     @DBRef
     private Set<User> followers = new HashSet<User>();

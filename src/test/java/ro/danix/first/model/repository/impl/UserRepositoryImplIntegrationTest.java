@@ -12,13 +12,16 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ro.danix.first.model.config.FactoriesConfig;
 import ro.danix.first.model.config.MongoConfig;
 import ro.danix.first.model.domain.Address;
 import ro.danix.first.model.domain.EmailAddress;
-import ro.danix.first.model.domain.Profile;
+import ro.danix.first.model.domain.UserProfile;
 import ro.danix.first.model.domain.user.User;
+import ro.danix.first.model.domain.user.factory.UserFactory;
 import ro.danix.first.model.repository.UserRepository;
 import ro.danix.test.SlowRunningTests;
 
@@ -28,20 +31,18 @@ import ro.danix.test.SlowRunningTests;
  */
 @Category(SlowRunningTests.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {MongoConfig.class})
+@ContextConfiguration(classes = {MongoConfig.class, FactoriesConfig.class})
+@ActiveProfiles(profiles = "factories")
 public class UserRepositoryImplIntegrationTest {
-
-    private static final String FIRST_NAME = "danix";
-
-    private static final String LAST_NAME = "danix";
-
-    private static final String EMAIL = "dan@yahoo.com";
 
     @Autowired
     private Mongo mongo;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserFactory userFactory;
 
     @Before
     public void setUp() {
@@ -55,13 +56,12 @@ public class UserRepositoryImplIntegrationTest {
         User user = buildUser();
 
         userRepository.save(user);
-        User savedUser = userRepository.findByEmailAddress(new EmailAddress((EMAIL)));
+        User savedUser = userRepository.findByEmailAddress(new EmailAddress((UserFactory.EMAIL)));
 
-        User user1 = new User("danix1", new EmailAddress("danix1@yahoo.com"));
+        User user1 = buildUser();
+        user1.setUsername("danix1");
+        user1.setEmailAddress(new EmailAddress("danix1@yahoo.com"));
         user1.setFirstname("dan1");
-        user1.setLastname("ix1");
-        user1.add(new Address("street", "city", "state", "", ""));
-        user1.setProfile(new Profile("name", "website"));
         user1.addFollower(savedUser);
         user1.addFollowing(savedUser);
 
@@ -69,12 +69,12 @@ public class UserRepositoryImplIntegrationTest {
 
         User userWithFollower = userRepository.findByEmailAddress(new EmailAddress(("danix1@yahoo.com")));
         assertThat(savedUser, is(notNullValue()));
-        assertThat(savedUser, is(named(FIRST_NAME)));
+        assertThat(savedUser, is(named(UserFactory.FIRST_NAME)));
 
         assertThat(userWithFollower, is(notNullValue()));
         assertThat(userWithFollower, is(named("dan1")));
-        assertThat(userWithFollower.getFollowers(), hasItem(named(FIRST_NAME)));
-        assertThat(userWithFollower.getFollowing(), hasItem(named(FIRST_NAME)));
+        assertThat(userWithFollower.getFollowers(), hasItem(named(UserFactory.FIRST_NAME)));
+        assertThat(userWithFollower.getFollowing(), hasItem(named(UserFactory.FIRST_NAME)));
     }
 
     @Test
@@ -82,18 +82,13 @@ public class UserRepositoryImplIntegrationTest {
         User user = buildUser();
         userRepository.save(user);
 
-        EmailAddress emailAddress = new EmailAddress(EMAIL);
+        EmailAddress emailAddress = new EmailAddress(UserFactory.EMAIL);
         user = userRepository.findByEmailAddress(emailAddress);
         assertThat(user, is(notNullValue()));
-        assertThat(user, is(named(FIRST_NAME)));
+        assertThat(user, is(named(UserFactory.FIRST_NAME)));
     }
 
     private User buildUser() {
-        User user = new User("danix", new EmailAddress(EMAIL));
-        user.setFirstname(FIRST_NAME);
-        user.setLastname(LAST_NAME);
-        user.add(new Address("street", "city", "state", "contry", "zipCode"));
-        user.setProfile(new Profile("name", "website"));
-        return user;
+        return userFactory.build();
     }
 }

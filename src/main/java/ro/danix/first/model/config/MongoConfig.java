@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
 
 /**
  *
- * @author Dan Persa
+ * @author danix
  */
 @Configuration
 @ComponentScan({"ro.danix.first.model", "ro.danix.first.exception"})

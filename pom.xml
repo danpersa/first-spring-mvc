@@ -22,6 +22,7 @@
         <mongodb.driver.version>2.9.1</mongodb.driver.version>
         <log4j.version>1.2.14</log4j.version>
         <guava.version>12.0.1</guava.version>
+        <lombok.version>0.11.6</lombok.version>
     </properties>
     
     <repositories>
@@ -354,6 +355,11 @@
             <artifactId>jetty</artifactId>
             <version>6.1.26</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
         </dependency>
     </dependencies>
 
