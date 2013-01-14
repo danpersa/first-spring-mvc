@@ -1,6 +1,6 @@
 package ro.danix.first.model.repository;
 
-import java.util.Set;
+import java.util.List;
 import org.springframework.data.repository.Repository;
 import ro.danix.first.model.domain.Baby;
 import ro.danix.first.model.domain.user.BabyParent;
@@ -15,5 +15,5 @@ public interface BabyRepository extends Repository<Baby, Long> {
 
     Baby save(Baby user);
 
-    Set<Baby> findByBabyParent(BabyParent babyParent);
+    List<Baby> findByBabyParent(BabyParent babyParent);
 }

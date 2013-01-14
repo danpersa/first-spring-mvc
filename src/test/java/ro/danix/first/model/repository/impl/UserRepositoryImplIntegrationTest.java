@@ -1,4 +1,4 @@
-package ro.danix.first.model.repository;
+package ro.danix.first.model.repository.impl;
 
 import static org.hamcrest.Matchers.*;
 import static ro.danix.first.CoreMatchers.*;
@@ -19,6 +19,7 @@ import ro.danix.first.model.domain.Address;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.Profile;
 import ro.danix.first.model.domain.user.User;
+import ro.danix.first.model.repository.UserRepository;
 import ro.danix.test.SlowRunningTests;
 
 /**
@@ -28,7 +29,7 @@ import ro.danix.test.SlowRunningTests;
 @Category(SlowRunningTests.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {MongoConfig.class})
-public class UserRepositoryIntegrationTest {
+public class UserRepositoryImplIntegrationTest {
 
     private static final String FIRST_NAME = "danix";
 
