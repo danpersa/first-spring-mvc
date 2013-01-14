@@ -62,6 +62,7 @@ public class BabyRepositoryImplIntegrationTest {
 
     @Test
     public void saveTest() {
+        // given
         BabyParent babyParent = createBabyParent();
         
         Baby baby = babyFactory.build();
@@ -89,12 +90,12 @@ public class BabyRepositoryImplIntegrationTest {
         babyRepository.save(baby);
         // when
         List<Baby> babies = babyRepository.findByBabyParent(babyParent);
+        // then
         assertThat(babies, is(notNullValue()));
         assertThat(babies.size(), is(1));
     }
 
     private BabyParent createBabyParent() {
-        // given
         BabyParent babyParent = babyParentFactory.build();
         babyParent = babyParentRepository.save(babyParent);
         return babyParent;
