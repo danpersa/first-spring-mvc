@@ -101,7 +101,7 @@ public class UserController {
     // The user is loaded from the "user" URI variable via {@link UserConverter}.
     @RequestMapping(value = "/{user}", method = RequestMethod.DELETE)
     public String destroy(Model model, @PathVariable User user) {
-        this.userService.destroy(user);
+        this.userService.delete(user);
         model.addAttribute("users", userService.findAll());
         return "users/index";
     }

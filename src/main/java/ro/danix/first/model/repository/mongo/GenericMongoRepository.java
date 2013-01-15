@@ -5,6 +5,7 @@ import static org.springframework.data.mongodb.core.query.Query.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,11 +25,11 @@ public class GenericMongoRepository<T, R extends Serializable> implements MongoR
 
     protected final MongoOperations operations;
 
+    @Getter
     protected final Class<T> clazz;
-    
+
     protected ExceptionUtils exceptionUtils = new ExceptionUtils();
 
-    @Autowired
     public GenericMongoRepository(MongoOperations operations, Class<T> clazz) {
         this.operations = operations;
         this.clazz = clazz;
@@ -43,6 +44,13 @@ public class GenericMongoRepository<T, R extends Serializable> implements MongoR
             result.add(entity);
         }
         return result;
+    }
+
+    @Override
+    public <S extends T> S save(S entity) {
+        exceptionUtils.argumentShouldNotBeNull(entity);
+        operations.save(entity);
+        return entity;
     }
 
     @Override
@@ -67,10 +75,14 @@ public class GenericMongoRepository<T, R extends Serializable> implements MongoR
     }
 
     @Override
-    public <S extends T> S save(S entity) {
-        exceptionUtils.argumentShouldNotBeNull(entity);
-        operations.save(entity);
-        return entity;
+    public Iterable<T> findAll(Iterable<R> ids) {
+        exceptionUtils.argumentShouldNotBeNull(ids);
+        Criteria criteria = new Criteria();
+        for (R id : ids) {
+            criteria = criteria.orOperator(where("id").is(id));
+        }
+        Query query = new Query(criteria);
+        return operations.find(query, clazz);
     }
 
     @Override
@@ -86,17 +98,6 @@ public class GenericMongoRepository<T, R extends Serializable> implements MongoR
         Query query = query(where("id").is(id));
         long count = operations.count(query, clazz);
         return count != 0l;
-    }
-
-    @Override
-    public Iterable<T> findAll(Iterable<R> ids) {
-        exceptionUtils.argumentShouldNotBeNull(ids);
-        Criteria criteria = new Criteria();
-        for (R id : ids) {        
-            criteria = criteria.orOperator(where("id").is(id));
-        }
-        Query query = new Query(criteria);
-        return operations.find(query, clazz);
     }
 
     @Override
