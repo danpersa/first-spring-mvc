@@ -1,5 +1,6 @@
 package ro.danix.first.model.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import ro.danix.first.model.domain.Baby;
 
@@ -11,7 +12,7 @@ public interface BabyService {
 
     List<Baby> findAll();
 
-    Baby findOne(Long id);
+    Baby findOne(BigDecimal id);
 
     Baby save(Baby user);
 

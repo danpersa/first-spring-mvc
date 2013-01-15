@@ -1,5 +1,6 @@
 package ro.danix.first.model.repository.user.mongo;
 
+import java.io.Serializable;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
+import ro.danix.first.model.repository.mongo.GenericMongoRepository;
 import ro.danix.first.model.repository.user.UserRepository;
 
 /**
@@ -17,26 +19,11 @@ import ro.danix.first.model.repository.user.UserRepository;
  * @author danix
  */
 @Repository
-public class UserRepositoryImpl implements UserRepository {
-
-    private final MongoOperations operations;
+public class UserRepositoryImpl extends GenericMongoRepository<User, BigDecimal> implements UserRepository {
 
     @Autowired
     public UserRepositoryImpl(MongoOperations operations) {
-        Assert.notNull(operations);
-        this.operations = operations;
-    }
-
-    @Override
-    public User findOne(BigDecimal id) {
-        Query query = query(where("id").is(id));
-        return operations.findOne(query, User.class);
-    }
-
-    @Override
-    public User save(User user) {
-        operations.save(user);
-        return user;
+        super(operations, User.class);
     }
 
     @Override

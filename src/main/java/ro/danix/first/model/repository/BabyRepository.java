@@ -1,7 +1,8 @@
 package ro.danix.first.model.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import ro.danix.first.model.domain.Baby;
 import ro.danix.first.model.domain.user.BabyParent;
 
@@ -9,11 +10,7 @@ import ro.danix.first.model.domain.user.BabyParent;
  *
  * @author danix
  */
-public interface BabyRepository extends Repository<Baby, Long> {
-
-    Baby findOne(Long id);
-
-    Baby save(Baby baby);
+public interface BabyRepository extends MongoRepository<Baby, BigDecimal> {
 
     List<Baby> findByBabyParent(BabyParent babyParent);
 }

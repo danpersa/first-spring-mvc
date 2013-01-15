@@ -1,5 +1,7 @@
 package ro.danix.first.model.repository.mongo;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +21,11 @@ import ro.danix.first.model.repository.BabyRepository;
  * @author danix
  */
 @Repository
-public class BabyRepositoryImpl implements BabyRepository {
-
-    private final MongoOperations operations;
+public class BabyRepositoryImpl extends GenericMongoRepository<Baby, BigDecimal> implements BabyRepository {
 
     @Autowired
     public BabyRepositoryImpl(MongoOperations operations) {
-        Assert.notNull(operations);
-        this.operations = operations;
-    }
-
-    @Override
-    public Baby findOne(Long id) {
-        Query query = query(where("id").is(id));
-        return operations.findOne(query, Baby.class);
-    }
-
-    @Override
-    public Baby save(Baby baby) {
-        operations.save(baby);
-        return baby;
+        super(operations , Baby.class);
     }
 
     @Override

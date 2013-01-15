@@ -1,5 +1,6 @@
 package ro.danix.first.model.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class BabyServiceImpl implements BabyService {
     }
 
     @Override
-    public Baby findOne(Long id) {
+    public Baby findOne(BigDecimal id) {
         return babyRepository.findOne(id);
     }
 
