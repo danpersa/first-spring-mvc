@@ -3,7 +3,7 @@ package ro.danix.first.model.repository.user.mongo;
 import java.io.Serializable;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,7 +19,7 @@ import ro.danix.first.model.repository.user.UserRepository;
  * @author danix
  */
 @Repository
-public class UserRepositoryImpl extends GenericMongoRepository<User, BigDecimal> implements UserRepository {
+public class UserRepositoryImpl extends GenericMongoRepository<User, BigInteger> implements UserRepository {
 
     @Autowired
     public UserRepositoryImpl(MongoOperations operations) {

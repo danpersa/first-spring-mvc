@@ -1,6 +1,6 @@
 package ro.danix.first.model.repository.user.mongo;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import ro.danix.first.model.repository.user.BabyParentRepository;
  * @author danix
  */
 @Repository
-public class BabyParentRepositoryImpl extends GenericMongoRepository<BabyParent, BigDecimal> implements BabyParentRepository {
+public class BabyParentRepositoryImpl extends GenericMongoRepository<BabyParent, BigInteger> implements BabyParentRepository {
 
     @Autowired
     public BabyParentRepositoryImpl(MongoOperations operations) {

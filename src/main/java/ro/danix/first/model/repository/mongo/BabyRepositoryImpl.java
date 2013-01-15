@@ -1,7 +1,7 @@
 package ro.danix.first.model.repository.mongo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import ro.danix.first.model.repository.BabyRepository;
  * @author danix
  */
 @Repository
-public class BabyRepositoryImpl extends GenericMongoRepository<Baby, BigDecimal> implements BabyRepository {
+public class BabyRepositoryImpl extends GenericMongoRepository<Baby, BigInteger> implements BabyRepository {
 
     @Autowired
     public BabyRepositoryImpl(MongoOperations operations) {

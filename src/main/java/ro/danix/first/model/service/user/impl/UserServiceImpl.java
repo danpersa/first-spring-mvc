@@ -1,6 +1,6 @@
 package ro.danix.first.model.service.user.impl;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import ro.danix.first.model.service.user.UserService;
  * @author danix
  */
 @Service("userService")
-public class UserServiceImpl extends GenericMongoService<User, BigDecimal> implements UserService {
+public class UserServiceImpl extends GenericMongoService<User, BigInteger> implements UserService {
 
     @Autowired(required = true)
     private ExceptionUtils exceptionUtils;

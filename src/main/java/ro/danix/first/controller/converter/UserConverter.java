@@ -1,6 +1,6 @@
 package ro.danix.first.controller.converter;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import ro.danix.first.model.domain.user.User;
@@ -17,6 +17,6 @@ public class UserConverter implements Converter<String, User> {
 
     @Override
     public User convert(String source) {
-        return this.userService.findOne(new BigDecimal(source));
+        return this.userService.findOne(new BigInteger(source));
     }
 }

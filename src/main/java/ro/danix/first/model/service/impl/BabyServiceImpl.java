@@ -1,6 +1,6 @@
 package ro.danix.first.model.service.impl;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.danix.first.exception.ExceptionUtils;
@@ -13,7 +13,7 @@ import ro.danix.first.model.service.BabyService;
  * @author danix
  */
 @Service("babyService")
-public class BabyServiceImpl extends GenericMongoService<Baby, BigDecimal> implements BabyService {
+public class BabyServiceImpl extends GenericMongoService<Baby, BigInteger> implements BabyService {
 
     @Autowired(required = true)
     private ExceptionUtils exceptionUtils;
