@@ -15,5 +15,5 @@ public interface BabyService {
 
     Baby save(Baby user);
 
-    boolean destroy(Baby user);
+    boolean delete(Baby user);
 }

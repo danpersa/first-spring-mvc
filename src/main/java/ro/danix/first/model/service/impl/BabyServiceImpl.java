@@ -33,11 +33,11 @@ public class BabyServiceImpl implements BabyService {
 
     @Override
     public Baby save(Baby baby) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return babyRepository.save(baby);
     }
 
     @Override
-    public boolean destroy(Baby baby) {
+    public boolean delete(Baby baby) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
