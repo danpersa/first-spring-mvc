@@ -1,4 +1,4 @@
-package ro.danix.first.model.service;
+package ro.danix.first.model.service.user;
 
 import java.util.List;
 import ro.danix.first.model.domain.user.User;
@@ -9,7 +9,7 @@ import ro.danix.first.model.domain.user.User;
  */
 public interface UserService {
 
-    List<User> all();
+    List<User> findAll();
 
     User findOne(Long id);
 

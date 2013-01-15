@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
-import ro.danix.first.model.service.UserService;
+import ro.danix.first.model.service.user.UserService;
 
 /**
  *
@@ -28,20 +28,20 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("users", userService.all());
+        model.addAttribute("users", userService.findAll());
         return "users/index";
     }
 
     @RequestMapping(value = "/json", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody
     List<User> indexJson() {
-        List<User> users = userService.all();
+        List<User> users = userService.findAll();
         return users;
     }
     
     @RequestMapping(value = "/js", method = RequestMethod.GET, produces = "text/javascript")
     public String indexJs() {
-        List<User> users = userService.all();
+        List<User> users = userService.findAll();
         return "users/index";
     }
 
@@ -102,7 +102,7 @@ public class UserController {
     @RequestMapping(value = "/{user}", method = RequestMethod.DELETE)
     public String destroy(Model model, @PathVariable User user) {
         this.userService.destroy(user);
-        model.addAttribute("users", userService.all());
+        model.addAttribute("users", userService.findAll());
         return "users/index";
     }
 }

@@ -41,7 +41,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import ro.danix.first.config.ApplicationConfig;
 import ro.danix.first.controller.converter.UserConverter;
-import ro.danix.first.model.service.UserService;
+import ro.danix.first.model.service.user.UserService;
 
 /**
  * Spring MVC Java-based configuration.

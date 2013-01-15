@@ -3,7 +3,7 @@ package ro.danix.first.controller.converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import ro.danix.first.model.domain.user.User;
-import ro.danix.first.model.service.UserService;
+import ro.danix.first.model.service.user.UserService;
 
 public class UserConverter implements Converter<String, User> {
 

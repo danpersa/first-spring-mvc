@@ -1,4 +1,4 @@
-package ro.danix.first.model.service.impl;
+package ro.danix.first.model.service.user.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ro.danix.first.exception.ExceptionUtils;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.repository.user.UserRepository;
-import ro.danix.first.model.service.UserService;
+import ro.danix.first.model.service.user.UserService;
 
 /**
  *
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> all() {
+    public List<User> findAll() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
