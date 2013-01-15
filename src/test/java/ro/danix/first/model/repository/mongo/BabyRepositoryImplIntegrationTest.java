@@ -1,4 +1,4 @@
-package ro.danix.first.model.repository.user.mongo;
+package ro.danix.first.model.repository.mongo;
 
 import static org.hamcrest.Matchers.*;
 import static ro.danix.first.CoreMatchers.*;
