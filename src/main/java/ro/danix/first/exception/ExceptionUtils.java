@@ -5,7 +5,7 @@ import ro.danix.first.model.domain.AbstractDocument;
 
 /**
  *
- * @author dpersa
+ * @author danix
  */
 @Component
 public class ExceptionUtils {
