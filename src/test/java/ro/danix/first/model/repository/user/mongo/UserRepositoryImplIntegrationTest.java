@@ -112,4 +112,28 @@ public class UserRepositoryImplIntegrationTest {
             assertThat(followers, hasItem(follower));
         }
     }
+    
+    @Test
+    public void findFollowingsTest() {
+        log.info("start findFollowingsTest");
+        User user = userFactory.build();
+       
+        List<BigInteger> followingIds = new ArrayList<BigInteger>();
+        for (int i = 0; i < 5; ++i) {
+            User following = userFactory.build(new Integer(i).toString());
+            following = userRepository.save(following);
+            followingIds.add(following.getId());
+            user.addFollowing(following);
+        }
+        user = userRepository.save(user);
+        // when
+        List<User> followings = userRepository.findFollowing(user, new PageRequest(0, UserRepository.NUMBER_OF_USERS_PER_PAGE));
+        // 
+        assertThat(followings, is(notNullValue()));
+        assertThat(followings.size(), is(5));
+        for (BigInteger followingId : followingIds) {
+            User following = userRepository.findOne(followingId);
+            assertThat(followings, hasItem(following));
+        }
+    }
 }
