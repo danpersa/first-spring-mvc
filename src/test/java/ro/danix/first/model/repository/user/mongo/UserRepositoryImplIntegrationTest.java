@@ -7,6 +7,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,6 +32,7 @@ import ro.danix.test.SlowRunningTests;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {MongoConfig.class, FactoriesConfig.class})
 @ActiveProfiles(profiles = "factories")
+@Slf4j
 public class UserRepositoryImplIntegrationTest {
 
     @Autowired
@@ -51,6 +53,7 @@ public class UserRepositoryImplIntegrationTest {
 
     @Test
     public void saveTest() {
+        log.info("start saveTest");
         User user = userFactory.build();
 
         userRepository.save(user);
@@ -77,6 +80,7 @@ public class UserRepositoryImplIntegrationTest {
 
     @Test
     public void findByEmailAddressTest() {
+        log.info("start findByEmailAddressTest");
         User user = userFactory.build();
         userRepository.save(user);
 

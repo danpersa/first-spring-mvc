@@ -1,6 +1,5 @@
 package ro.danix.first.model.repository.user.mongo;
 
-import java.io.Serializable;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import java.math.BigInteger;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.repository.mongo.GenericMongoRepository;

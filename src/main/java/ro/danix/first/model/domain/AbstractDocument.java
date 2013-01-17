@@ -3,7 +3,6 @@ package ro.danix.first.model.domain;
 import java.math.BigInteger;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 import org.springframework.data.annotation.Id;
 
@@ -12,7 +11,6 @@ import org.springframework.data.annotation.Id;
  *
  * @author Oliver Gierke
  */
-@ToString
 @EqualsAndHashCode
 public class AbstractDocument {
 

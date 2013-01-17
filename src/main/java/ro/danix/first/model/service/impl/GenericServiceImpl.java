@@ -5,44 +5,44 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import ro.danix.first.model.repository.mongo.GenericMongoRepository;
+import ro.danix.first.model.repository.GenericRepository;
+import ro.danix.first.model.service.GenericService;
 
 /**
  *
  * @author dpersa
  */
-public class GenericMongoService<T, R extends Serializable> implements MongoRepository<T, R> {
+public class GenericServiceImpl<T, R extends Serializable> implements GenericService<T, R> {
 
-    protected final MongoRepository<T, R> mongoRepository;
+    protected final GenericRepository<T, R> genericRepository;
 
-    public GenericMongoService(MongoRepository<T, R> mongoRepository) {
-        this.mongoRepository = mongoRepository;
+    public GenericServiceImpl(GenericRepository<T, R> genericRepository) {
+        this.genericRepository = genericRepository;
     }
 
     @Override
     public <S extends T> List<S> save(Iterable<S> entites) {
-        return mongoRepository.save(entites);
+        return genericRepository.save(entites);
     }
 
     @Override
     public <S extends T> S save(S entity) {
-        return mongoRepository.save(entity);
+        return genericRepository.save(entity);
     }
 
     @Override
     public List<T> findAll() {
-        return mongoRepository.findAll();
+        return genericRepository.findAll();
     }
 
     @Override
     public List<T> findAll(Sort sort) {
-        return mongoRepository.findAll(sort);
+        return genericRepository.findAll(sort);
     }
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        return mongoRepository.findAll(pageable);
+        return genericRepository.findAll(pageable);
     }
 
     @Override
@@ -52,36 +52,36 @@ public class GenericMongoService<T, R extends Serializable> implements MongoRepo
 
     @Override
     public T findOne(R id) {
-        return mongoRepository.findOne(id);
+        return genericRepository.findOne(id);
     }
 
     @Override
     public boolean exists(R id) {
-        return mongoRepository.exists(id);
+        return genericRepository.exists(id);
     }
 
     @Override
     public long count() {
-        return mongoRepository.count();
+        return genericRepository.count();
     }
 
     @Override
     public void delete(R id) {
-        mongoRepository.delete(id);
+        genericRepository.delete(id);
     }
 
     @Override
     public void delete(T entity) {
-        mongoRepository.delete(entity);
+        genericRepository.delete(entity);
     }
 
     @Override
     public void delete(Iterable<? extends T> entities) {
-        mongoRepository.delete(entities);
+        genericRepository.delete(entities);
     }
 
     @Override
     public void deleteAll() {
-        mongoRepository.deleteAll();
+        genericRepository.deleteAll();
     }
 }

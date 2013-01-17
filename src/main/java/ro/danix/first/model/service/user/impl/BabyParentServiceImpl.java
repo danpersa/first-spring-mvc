@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ro.danix.first.exception.ExceptionUtils;
 import ro.danix.first.model.domain.user.BabyParent;
 import ro.danix.first.model.repository.user.BabyParentRepository;
-import ro.danix.first.model.service.impl.GenericMongoService;
+import ro.danix.first.model.service.impl.GenericServiceImpl;
 import ro.danix.first.model.service.user.BabyParentService;
 
 /**
@@ -14,7 +14,7 @@ import ro.danix.first.model.service.user.BabyParentService;
  * @author danix
  */
 @Service("babyParentService")
-public class BabyParentServiceImpl extends GenericMongoService<BabyParent, BigInteger> implements BabyParentService {
+public class BabyParentServiceImpl extends GenericServiceImpl<BabyParent, BigInteger> implements BabyParentService {
 
     @Autowired(required = true)
     private ExceptionUtils exceptionUtils;

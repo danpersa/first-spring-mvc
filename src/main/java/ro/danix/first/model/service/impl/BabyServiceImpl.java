@@ -13,7 +13,7 @@ import ro.danix.first.model.service.BabyService;
  * @author danix
  */
 @Service("babyService")
-public class BabyServiceImpl extends GenericMongoService<Baby, BigInteger> implements BabyService {
+public class BabyServiceImpl extends GenericServiceImpl<Baby, BigInteger> implements BabyService {
 
     @Autowired(required = true)
     private ExceptionUtils exceptionUtils;

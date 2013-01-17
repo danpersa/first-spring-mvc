@@ -1,15 +1,15 @@
 package ro.danix.first.model.repository.user;
 
 import java.math.BigInteger;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
+import ro.danix.first.model.repository.GenericRepository;
 
 /**
  *
  * @author danix
  */
-public interface UserRepository extends MongoRepository<User, BigInteger> {
+public interface UserRepository extends GenericRepository<User, BigInteger> {
 
     User findByEmailAddress(EmailAddress emailAddress);
 }
