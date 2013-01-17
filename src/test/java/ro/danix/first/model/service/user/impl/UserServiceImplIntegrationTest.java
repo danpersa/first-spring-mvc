@@ -73,9 +73,9 @@ public class UserServiceImplIntegrationTest {
         follower = userRepository.findByEmailAddress(new EmailAddress(FOLLOWER_EMAIL));
         
         assertThat(user.getFollowersCount(), is(new Long(1)));
-        assertThat(user.getFollowers(), hasItem(follower));
+        assertThat(user.getFollowerIds(), hasItem(follower.getId()));
         
         assertThat(follower.getFollowingCount(), is(new Long(1)));
-        assertThat(follower.getFollowing(), hasItem(user));       
+        assertThat(follower.getFollowingIds(), hasItem(user.getId()));       
     }
 }

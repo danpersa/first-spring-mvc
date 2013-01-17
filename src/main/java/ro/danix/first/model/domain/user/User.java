@@ -1,17 +1,15 @@
 package ro.danix.first.model.domain.user;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import ro.danix.first.exception.ExceptionUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
@@ -54,14 +52,12 @@ public class User extends AbstractDocument {
     @Setter
     private UserProfile userProfile;
 
-    @DBRef
-    private Set<User> followers = new HashSet<User>();
+    private Set<BigInteger> followerIds = new HashSet<BigInteger>();
 
     @Getter
     private Long followersCount = 0l;
 
-    @DBRef
-    private Set<User> following = new HashSet<User>();
+    private Set<BigInteger> followingIds = new HashSet<BigInteger>();
 
     @Getter
     private Long followingCount = 0l;
@@ -85,14 +81,14 @@ public class User extends AbstractDocument {
     public void addFollower(User follower) {
         exceptionUtils.argumentShouldNotBeNull(follower);
         exceptionUtils.documentsShouldNotBeTheSame(this, follower);
-        followers.add(follower);
+        followerIds.add(follower.getId());
         followersCount += 1;
     }
 
     public void addFollowing(User followingUser) {
         exceptionUtils.argumentShouldNotBeNull(followingUser);
         exceptionUtils.documentsShouldNotBeTheSame(this, followingUser);
-        following.add(followingUser);
+        followingIds.add(followingUser.getId());
         followingCount += 1;
     }
 
@@ -100,11 +96,11 @@ public class User extends AbstractDocument {
         return Collections.unmodifiableSet(addresses);
     }
 
-    public Set<User> getFollowers() {
-        return Collections.unmodifiableSet(followers);
+    public Set<BigInteger> getFollowerIds() {
+        return Collections.unmodifiableSet(followerIds);
     }
 
-    public Set<User> getFollowing() {
-        return Collections.unmodifiableSet(following);
+    public Set<BigInteger> getFollowingIds() {
+        return Collections.unmodifiableSet(followingIds);
     }
 }

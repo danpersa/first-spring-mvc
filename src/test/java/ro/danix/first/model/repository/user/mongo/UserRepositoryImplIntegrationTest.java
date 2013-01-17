@@ -54,28 +54,25 @@ public class UserRepositoryImplIntegrationTest {
     @Test
     public void saveTest() {
         log.info("start saveTest");
+        User follower = userFactory.build();
+        follower = userRepository.save(follower);
+
         User user = userFactory.build();
+        user.setUsername("danix1");
+        user.setEmailAddress(new EmailAddress("danix1@yahoo.com"));
+        user.setFirstname("dan1");
+        user.addFollower(follower);
+        user.addFollowing(follower);
 
-        userRepository.save(user);
-        User savedUser = userRepository.findByEmailAddress(new EmailAddress((UserFactory.EMAIL)));
+        user = userRepository.save(user);
 
-        User user1 = userFactory.build();
-        user1.setUsername("danix1");
-        user1.setEmailAddress(new EmailAddress("danix1@yahoo.com"));
-        user1.setFirstname("dan1");
-        user1.addFollower(savedUser);
-        user1.addFollowing(savedUser);
+        assertThat(follower, is(notNullValue()));
+        assertThat(follower, is(firstNamed(UserFactory.FIRST_NAME)));
 
-        userRepository.save(user1);
-
-        User userWithFollower = userRepository.findByEmailAddress(new EmailAddress(("danix1@yahoo.com")));
-        assertThat(savedUser, is(notNullValue()));
-        assertThat(savedUser, is(firstNamed(UserFactory.FIRST_NAME)));
-
-        assertThat(userWithFollower, is(notNullValue()));
-        assertThat(userWithFollower, is(firstNamed("dan1")));
-        assertThat(userWithFollower.getFollowers(), hasItem(firstNamed(UserFactory.FIRST_NAME)));
-        assertThat(userWithFollower.getFollowing(), hasItem(firstNamed(UserFactory.FIRST_NAME)));
+        assertThat(user, is(notNullValue()));
+        assertThat(user, is(firstNamed("dan1")));
+        assertThat(user.getFollowerIds(), hasItem(follower.getId()));
+        assertThat(user.getFollowingIds(), hasItem(follower.getId()));
     }
 
     @Test

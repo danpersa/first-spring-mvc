@@ -33,18 +33,18 @@ public class UserTest {
         User instance = new User();
         instance.addFollower(follower);
 
-        assertThat(instance.getFollowers(), hasItem(follower));
+        assertThat(instance.getFollowerIds(), hasItem(follower.getId()));
         assertThat(instance.getFollowersCount(), is(new Long(1)));
     }
 
     @Test
     public void addFollowingTest() {
         log.info("start addFollowingTest");
-        User followimg = new User();
+        User following = new User();
         User instance = new User();
-        instance.addFollowing(followimg);
+        instance.addFollowing(following);
 
-        assertThat(instance.getFollowing(), hasItem(followimg));
+        assertThat(instance.getFollowingIds(), hasItem(following.getId()));
         assertThat(instance.getFollowingCount(), is(new Long(1)));
     }
 }
