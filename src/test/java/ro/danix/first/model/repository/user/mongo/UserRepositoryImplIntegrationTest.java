@@ -7,6 +7,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -92,9 +94,11 @@ public class UserRepositoryImplIntegrationTest {
         log.info("start findFollowersTest");
         User user = userFactory.build();
        
+        List<BigInteger> followerIds = new ArrayList<BigInteger>();
         for (int i = 0; i < 5; ++i) {
             User follower = userFactory.build(new Integer(i).toString());
             follower = userRepository.save(follower);
+            followerIds.add(follower.getId());
             user.addFollower(follower);
         }
         user = userRepository.save(user);
@@ -103,6 +107,9 @@ public class UserRepositoryImplIntegrationTest {
         // 
         assertThat(followers, is(notNullValue()));
         assertThat(followers.size(), is(5));
+        for (BigInteger followerId : followerIds) {
+            User follower = userRepository.findOne(followerId);
+            assertThat(followers, hasItem(follower));
+        }
     }
-
 }
