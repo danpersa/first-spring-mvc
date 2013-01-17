@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import ro.danix.first.model.domain.user.BabyParent;
 
 /**
  *
  * @author danix
  */
+@Document
 @EqualsAndHashCode(callSuper=true)
 public class Baby extends AbstractDocument {
     

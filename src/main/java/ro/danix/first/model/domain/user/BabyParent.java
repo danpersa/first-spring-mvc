@@ -13,7 +13,7 @@ import ro.danix.first.model.domain.Baby;
  *
  * @author danix
  */
-@Document
+@Document(collection = "user")
 public class BabyParent extends User {
 
     private final ExceptionUtils exceptionUtils = new ExceptionUtils();

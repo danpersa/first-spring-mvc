@@ -24,6 +24,7 @@ import ro.danix.first.model.config.FactoriesConfig;
 import ro.danix.first.model.config.MongoConfig;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
+import ro.danix.first.model.domain.user.factory.BabyParentFactory;
 import ro.danix.first.model.domain.user.factory.UserFactory;
 import ro.danix.first.model.repository.user.UserRepository;
 import ro.danix.test.SlowRunningTests;
@@ -47,6 +48,9 @@ public class UserRepositoryImplIntegrationTest {
 
     @Autowired
     private UserFactory userFactory;
+    
+    @Autowired
+    private BabyParentFactory babyParentFactory;
 
     @Before
     public void setUp() {
@@ -135,5 +139,16 @@ public class UserRepositoryImplIntegrationTest {
             User following = userRepository.findOne(followingId);
             assertThat(followings, hasItem(following));
         }
+    }
+    
+    @Test
+    public void classInheritanceTest() {
+        User user = userFactory.build();
+        User babyParent = babyParentFactory.build();
+        userRepository.save(user);
+        userRepository.save(babyParent);
+        List<User> users = userRepository.findAll();
+        assertThat(users, is(notNullValue()));
+        assertThat(users.size(), is(2));
     }
 }

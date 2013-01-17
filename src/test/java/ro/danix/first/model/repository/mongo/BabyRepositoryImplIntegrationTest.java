@@ -54,7 +54,7 @@ public class BabyRepositoryImplIntegrationTest {
     @Before
     public void setUp() {
         DB database = mongo.getDB(MongoConfig.DATABASE_NAME);
-        DBCollection babyParents = database.getCollection("babyParent");
+        DBCollection babyParents = database.getCollection("user");
         babyParents.remove(new BasicDBObject());
         DBCollection babies = database.getCollection("baby");
         babies.remove(new BasicDBObject());

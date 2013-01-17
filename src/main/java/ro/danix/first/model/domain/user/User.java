@@ -21,7 +21,7 @@ import ro.danix.first.model.domain.UserProfile;
 /**
  * @author danix
  */
-@Document
+@Document(collection = "user")
 @Slf4j
 public class User extends AbstractDocument {
 
