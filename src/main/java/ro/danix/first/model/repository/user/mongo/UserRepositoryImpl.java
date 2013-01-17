@@ -3,7 +3,9 @@ package ro.danix.first.model.repository.user.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import java.math.BigInteger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -28,5 +30,15 @@ public class UserRepositoryImpl extends GenericMongoRepository<User, BigInteger>
     public User findByEmailAddress(EmailAddress emailAddress) {
         Query query = query(where("emailAddress").is(emailAddress));
         return operations.findOne(query, User.class);
+    }
+
+    @Override
+    public List<User> findFollowers(User user, Pageable pageable) {
+        return findAll(user.getFollowerIds(), pageable);
+    }
+
+    @Override
+    public List<User> findFollowing(User user, Pageable pageable) {
+        return findAll(user.getFollowingIds(), pageable);
     }
 }

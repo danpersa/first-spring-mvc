@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,14 +13,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import ro.danix.first.exception.ExceptionUtils;
+import ro.danix.first.model.repository.GenericRepository;
 
 /**
  *
  * @author danix
  */
-public class GenericMongoRepository<T, R extends Serializable> implements MongoRepository<T, R> {
+public class GenericMongoRepository<T, R extends Serializable> implements GenericRepository<T, R> {
 
     protected final MongoOperations operations;
 
@@ -75,7 +74,7 @@ public class GenericMongoRepository<T, R extends Serializable> implements MongoR
     }
 
     @Override
-    public Iterable<T> findAll(Iterable<R> ids) {
+    public List<T> findAll(Iterable<R> ids) {
         exceptionUtils.argumentShouldNotBeNull(ids);
         Criteria criteria = new Criteria();
         for (R id : ids) {
@@ -83,6 +82,17 @@ public class GenericMongoRepository<T, R extends Serializable> implements MongoR
         }
         Query query = new Query(criteria);
         return operations.find(query, clazz);
+    }
+    
+    @Override
+    public List<T> findAll(Iterable<R> ids, Pageable pageable) {
+        exceptionUtils.argumentShouldNotBeNull(ids);
+        Criteria criteria = new Criteria();
+        for (R id : ids) {
+            criteria = criteria.orOperator(where("id").is(id));
+        }
+        Query query = new Query(criteria);
+        return operations.find(query.with(pageable), clazz);
     }
 
     @Override

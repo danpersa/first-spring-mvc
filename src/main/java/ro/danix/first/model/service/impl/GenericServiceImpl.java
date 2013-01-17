@@ -10,7 +10,7 @@ import ro.danix.first.model.service.GenericService;
 
 /**
  *
- * @author dpersa
+ * @author danix
  */
 public class GenericServiceImpl<T, R extends Serializable> implements GenericService<T, R> {
 
@@ -46,8 +46,13 @@ public class GenericServiceImpl<T, R extends Serializable> implements GenericSer
     }
 
     @Override
-    public Iterable<T> findAll(Iterable<R> ids) {
+    public List<T> findAll(Iterable<R> ids) {
         return findAll(ids);
+    }
+    
+    @Override
+    public List<T> findAll(Iterable<R> ids, Pageable pageable) {
+        return findAll(ids, pageable);
     }
 
     @Override
