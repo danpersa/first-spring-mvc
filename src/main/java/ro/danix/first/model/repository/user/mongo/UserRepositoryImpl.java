@@ -3,7 +3,6 @@ package ro.danix.first.model.repository.user.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,7 @@ public class UserRepositoryImpl extends GenericMongoRepository<User, BigInteger>
 
     @Autowired
     public UserRepositoryImpl(MongoOperations operations) {
-        super(operations, User.class);
+        super(operations, User.class, BigInteger.class);
     }
 
     @Override
@@ -35,11 +34,6 @@ public class UserRepositoryImpl extends GenericMongoRepository<User, BigInteger>
 
     @Override
     public List<User> findFollowers(User user, Pageable pageable) {
-//        List<BigInteger> followerIds = new ArrayList<BigInteger>();
-//        for (BigInteger followerId : user.getFollowerIds()) {
-//            followerIds.add(followerId);
-//        }
-//        
         return findAll(user.getFollowerIds(), pageable);
     }
 

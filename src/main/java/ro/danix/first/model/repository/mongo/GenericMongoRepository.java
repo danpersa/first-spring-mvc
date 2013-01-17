@@ -1,5 +1,6 @@
 package ro.danix.first.model.repository.mongo;
 
+import com.google.common.collect.Iterables;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import java.io.Serializable;
@@ -27,11 +28,15 @@ public class GenericMongoRepository<T, R extends Serializable> implements Generi
     @Getter
     protected final Class<T> clazz;
 
+    @Getter
+    protected final Class<R> idClazz;
+
     protected ExceptionUtils exceptionUtils = new ExceptionUtils();
 
-    public GenericMongoRepository(MongoOperations operations, Class<T> clazz) {
+    public GenericMongoRepository(MongoOperations operations, Class<T> clazz, Class<R> idClazz) {
         this.operations = operations;
         this.clazz = clazz;
+        this.idClazz = idClazz;
     }
 
     @Override
@@ -76,11 +81,10 @@ public class GenericMongoRepository<T, R extends Serializable> implements Generi
     @Override
     public List<T> findAll(Iterable<R> ids) {
         exceptionUtils.argumentShouldNotBeNull(ids);
-        // TODO: bug... to convert to array
-        Query query = new Query(where("id").in(ids));
+        Query query = new Query(where("id").in((Object[]) Iterables.toArray(ids, idClazz)));
         return operations.find(query, clazz);
     }
-    
+
     @Override
     public List<T> findAll(Set<R> ids, Pageable pageable) {
         exceptionUtils.argumentShouldNotBeNull(ids);

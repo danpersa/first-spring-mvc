@@ -21,7 +21,7 @@ public class BabyParentRepositoryImpl extends GenericMongoRepository<BabyParent,
 
     @Autowired
     public BabyParentRepositoryImpl(MongoOperations operations) {
-        super(operations, BabyParent.class);
+        super(operations, BabyParent.class, BigInteger.class);
     }
 
     @Override
