@@ -32,7 +32,7 @@ public class User extends AbstractDocument {
     @Indexed(unique = true)
     private String username;
 
-    @Size(max = 5)
+    @Size(max = 15)
     @Getter
     @Setter
     private String firstname;

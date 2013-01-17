@@ -30,4 +30,12 @@ public class UserFactory extends AbstractFactory<User> {
         user.setUserProfile(new UserProfile("name", "website"));
         return user;
     }
+    
+    public User build(String suffix) {
+        User user = init();
+        user.setUsername(USERNAME + "-" + suffix);
+        user.setEmailAddress(new EmailAddress("danix-" + suffix + "@manhattan.com"));
+        user.setFirstname(FIRST_NAME + "-" + suffix);
+        return user;
+    }
 }

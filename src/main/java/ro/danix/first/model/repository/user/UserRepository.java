@@ -12,6 +12,8 @@ import ro.danix.first.model.repository.GenericRepository;
  * @author danix
  */
 public interface UserRepository extends GenericRepository<User, BigInteger> {
+    
+    Integer NUMBER_OF_USERS_PER_PAGE = 5;
 
     User findByEmailAddress(EmailAddress emailAddress);
     

@@ -7,12 +7,14 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -53,24 +55,22 @@ public class UserRepositoryImplIntegrationTest {
 
     @Test
     public void saveTest() {
+        // given
         log.info("start saveTest");
         User follower = userFactory.build();
         follower = userRepository.save(follower);
 
-        User user = userFactory.build();
-        user.setUsername("danix1");
-        user.setEmailAddress(new EmailAddress("danix1@yahoo.com"));
-        user.setFirstname("dan1");
+        User user = userFactory.build("1");
         user.addFollower(follower);
         user.addFollowing(follower);
-
+        // when
         user = userRepository.save(user);
-
+        // then
         assertThat(follower, is(notNullValue()));
         assertThat(follower, is(firstNamed(UserFactory.FIRST_NAME)));
 
         assertThat(user, is(notNullValue()));
-        assertThat(user, is(firstNamed("dan1")));
+        assertThat(user, is(firstNamed(UserFactory.FIRST_NAME + "-1")));
         assertThat(user.getFollowerIds(), hasItem(follower.getId()));
         assertThat(user.getFollowingIds(), hasItem(follower.getId()));
     }
@@ -85,6 +85,24 @@ public class UserRepositoryImplIntegrationTest {
         user = userRepository.findByEmailAddress(emailAddress);
         assertThat(user, is(notNullValue()));
         assertThat(user, is(firstNamed(UserFactory.FIRST_NAME)));
+    }
+    
+    @Test
+    public void findFollowersTest() {
+        log.info("start findFollowersTest");
+        User user = userFactory.build();
+       
+        for (int i = 0; i < 5; ++i) {
+            User follower = userFactory.build(new Integer(i).toString());
+            follower = userRepository.save(follower);
+            user.addFollower(follower);
+        }
+        user = userRepository.save(user);
+        // when
+        List<User> followers = userRepository.findFollowers(user, new PageRequest(0, UserRepository.NUMBER_OF_USERS_PER_PAGE));
+        // 
+        assertThat(followers, is(notNullValue()));
+        assertThat(followers.size(), is(5));
     }
 
 }

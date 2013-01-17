@@ -2,6 +2,7 @@ package ro.danix.first.model.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -51,7 +52,7 @@ public class GenericServiceImpl<T, R extends Serializable> implements GenericSer
     }
     
     @Override
-    public List<T> findAll(Iterable<R> ids, Pageable pageable) {
+    public List<T> findAll(Set<R> ids, Pageable pageable) {
         return findAll(ids, pageable);
     }
 

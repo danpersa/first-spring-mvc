@@ -5,13 +5,13 @@ import static org.springframework.data.mongodb.core.query.Query.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import ro.danix.first.exception.ExceptionUtils;
 import ro.danix.first.model.repository.GenericRepository;
@@ -76,22 +76,15 @@ public class GenericMongoRepository<T, R extends Serializable> implements Generi
     @Override
     public List<T> findAll(Iterable<R> ids) {
         exceptionUtils.argumentShouldNotBeNull(ids);
-        Criteria criteria = new Criteria();
-        for (R id : ids) {
-            criteria = criteria.orOperator(where("id").is(id));
-        }
-        Query query = new Query(criteria);
+        // TODO: bug... to convert to array
+        Query query = new Query(where("id").in(ids));
         return operations.find(query, clazz);
     }
     
     @Override
-    public List<T> findAll(Iterable<R> ids, Pageable pageable) {
+    public List<T> findAll(Set<R> ids, Pageable pageable) {
         exceptionUtils.argumentShouldNotBeNull(ids);
-        Criteria criteria = new Criteria();
-        for (R id : ids) {
-            criteria = criteria.orOperator(where("id").is(id));
-        }
-        Query query = new Query(criteria);
+        Query query = new Query(where("id").in(ids.toArray()));
         return operations.find(query.with(pageable), clazz);
     }
 

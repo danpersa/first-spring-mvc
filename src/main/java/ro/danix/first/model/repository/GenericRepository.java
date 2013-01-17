@@ -2,6 +2,7 @@ package ro.danix.first.model.repository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -14,5 +15,5 @@ public interface GenericRepository<T, R extends Serializable> extends MongoRepos
     @Override
     public List<T> findAll(Iterable<R> ids);
     
-    List<T> findAll(Iterable<R> ids, Pageable pageable);
+    List<T> findAll(Set<R> ids, Pageable pageable);
 }

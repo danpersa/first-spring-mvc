@@ -13,7 +13,7 @@ import ro.danix.first.model.domain.user.User;
 
 /**
  *
- * @author dpersa
+ * @author danix
  */
 @Component
 public class BeforeSaveEventListener extends AbstractMongoEventListener<User> {
