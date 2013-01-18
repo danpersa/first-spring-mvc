@@ -3,6 +3,7 @@ package ro.danix.first.model.domain.user.factory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import ro.danix.first.model.domain.Address;
+import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.UserProfile;
 import ro.danix.first.model.domain.factory.AbstractFactory;
 import ro.danix.first.model.domain.user.BabyParent;
@@ -25,6 +26,7 @@ public class BabyParentFactory extends AbstractFactory<BabyParent> {
         BabyParent babyParent = new BabyParent();
         babyParent.setFirstname(FIRST_NAME);
         babyParent.setLastname(LAST_NAME);
+        babyParent.setEmailAddress(new EmailAddress(EMAIL));
         babyParent.add(new Address("street", "city", "state", "contry", "zipCode"));
         babyParent.setUserProfile(new UserProfile("name", "website"));
         return babyParent;
