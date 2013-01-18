@@ -1,6 +1,7 @@
 package ro.danix.first.model.domain;
 
 import lombok.Getter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.util.Assert;
 
 /**
@@ -42,6 +43,7 @@ public class Address {
      *
      * @return
      */
+    @JsonIgnore
     public Address getCopy() {
         return new Address(this.street, this.city, this.state, this.country, this.zipCode);
     }

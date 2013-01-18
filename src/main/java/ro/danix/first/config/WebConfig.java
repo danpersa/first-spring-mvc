@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2011 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package ro.danix.first.config;
 
 import java.util.ArrayList;
@@ -26,6 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -35,11 +25,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
-import ro.danix.first.config.ApplicationConfig;
 import ro.danix.first.controller.converter.UserConverter;
 import ro.danix.first.model.service.user.UserService;
 
@@ -50,14 +38,23 @@ import ro.danix.first.model.service.user.UserService;
  * sub-classes of Spring MVC infrastructure components like {@code RequestMappingHandlerMapping},
  * {@code RequestMappingHandlerAdapter}, etc.
  *
- * <p>Typically extending from {@link WebMvcConfigurerAdapter} and adding
- * {@code
+ * <p>Typically extending from {@link WebMvcConfigurerAdapter} and adding  {@code
  *
  * @EnableWebMvc} is sufficient.
  *
  */
-//@Configuration
+@Configuration
+@ComponentScan(basePackages = {"ro.danix.first.controller", "ro.danix.first.model.config"})
 public class WebConfig extends WebMvcConfigurationSupport {
+
+    @Autowired
+    MappingJacksonHttpMessageConverter mappingJacksonHttpMessageConverter;
+
+    @Autowired
+    StringHttpMessageConverter stringHttpMessageConverter;
+
+    @Autowired
+    ByteArrayHttpMessageConverter byteArrayHttpMessageConverter;
 
     @Autowired
     private ApplicationConfig applicationConfig;
@@ -69,16 +66,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.addViewController("/").setViewName("login");
 //        registry.addViewController("/login").setViewName("login");
-    }
-
-//    @Bean
-    public InternalResourceViewResolver javascriptViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setContentType("text/javascript");
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".js.jsp");
-        resolver.setOrder(1);
-        return resolver;
     }
 
 //    @Bean
@@ -94,7 +81,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
         return resolver;
     }
 
-    @Bean
+//    @Bean
     public FreeMarkerConfigurer freemarkerConfigurer() {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
         freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views");
@@ -106,15 +93,14 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
         ContentNegotiatingViewResolver contentNegotiatingViewResolver = new ContentNegotiatingViewResolver();
         Map<String, String> mediaTypes = new HashMap<String, String>();
-        mediaTypes.put("html", "text/html");
-        mediaTypes.put("json", "application/json");
-        mediaTypes.put("js", "text/javascript");
+        mediaTypes.put("plain", MediaType.TEXT_PLAIN_VALUE);
+        mediaTypes.put("json", MediaType.APPLICATION_JSON_VALUE);
+        mediaTypes.put("xml", MediaType.APPLICATION_XML_VALUE);
+        mediaTypes.put("html", MediaType.TEXT_HTML_VALUE);
         contentNegotiatingViewResolver.setMediaTypes(mediaTypes);
-        contentNegotiatingViewResolver.setDefaultContentType(MediaType.TEXT_HTML);
+        contentNegotiatingViewResolver.setDefaultContentType(MediaType.TEXT_PLAIN);
 
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
-        viewResolvers.add(viewResolver());
-        viewResolvers.add(javascriptViewResolver());
         contentNegotiatingViewResolver.setViewResolvers(viewResolvers);
 
         List<View> defaultViews = new ArrayList<View>();
@@ -164,5 +150,12 @@ public class WebConfig extends WebMvcConfigurationSupport {
 //        customResolver.afterPropertiesSet();
 //
 //        exceptionResolvers.add(customResolver);
+    }
+
+    @Override
+    protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(mappingJacksonHttpMessageConverter);
+        converters.add(stringHttpMessageConverter);
+        converters.add(byteArrayHttpMessageConverter);
     }
 }

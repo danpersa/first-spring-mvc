@@ -3,6 +3,7 @@ package ro.danix.first.model.domain;
 import java.util.regex.Pattern;
 import javax.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
@@ -19,6 +20,7 @@ public final class EmailAddress {
 
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
+    @Getter
     @Field("email")
     private final String value;
 

@@ -15,18 +15,27 @@
     </context-param>
     
     <context-param>
-		<param-name>spring.profiles.active</param-name>
-		<param-value>production</param-value>
-	</context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>production</param-value>
+    </context-param>
     
     <context-param>
-		<param-name>contextInitializerClasses</param-name>
-		<param-value>ro.danix.first.setup.MyApplicationContextInitializer</param-value>
-	</context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>ro.danix.first.setup.MyApplicationContextInitializer</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/classes/log4j.properties</param-value>
+    </context-param>
 
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
   
     <!-- Enables use of HTTP methods PUT and DELETE -->
@@ -40,20 +49,20 @@
         <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
     </filter>
 
-    <filter>
+    <!--    <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
+    </filter>-->
 
     <filter-mapping>
         <filter-name>localizationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
+    <!--    <filter-mapping>
       <filter-name>springSecurityFilterChain</filter-name>
       <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <filter-mapping>
         <filter-name>httpMethodFilter</filter-name>
@@ -67,34 +76,30 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value></param-value>
+            <param-value>ro.danix.first.config.**</param-value>
         </init-param>
-<!--        <init-param>
+        <init-param>
             <param-name>contextClass</param-name>
             <param-value>
                 org.springframework.web.context.support.AnnotationConfigWebApplicationContext
             </param-value>
         </init-param>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>ro.danix.first.config</param-value>
-        </init-param>-->
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    <jsp-config>
+<!--    <jsp-config>
         <taglib>
             <taglib-uri>http://www.springframework.org/security/tags</taglib-uri>
             <taglib-location>/WEB-INF/tld/security.tld</taglib-location>
         </taglib>
-    </jsp-config>
+    </jsp-config>-->
     <welcome-file-list>
         <welcome-file></welcome-file>
     </welcome-file-list>
