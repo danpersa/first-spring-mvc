@@ -55,7 +55,7 @@ public class UserRepositoryImplIntegrationTest {
     @Before
     public void setUp() {
         DB database = mongo.getDB(MongoConfig.DATABASE_NAME);
-        DBCollection users = database.getCollection("user");
+        DBCollection users = database.getCollection(User.MONGO_COLLECTION);
         users.remove(new BasicDBObject());
     }
 

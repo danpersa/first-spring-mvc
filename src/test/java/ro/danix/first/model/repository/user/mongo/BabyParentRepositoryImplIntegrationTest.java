@@ -26,6 +26,7 @@ import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.factory.BabyFactory;
 import ro.danix.first.model.domain.user.BabyParent;
 import ro.danix.first.model.domain.Baby;
+import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.domain.user.factory.BabyParentFactory;
 import ro.danix.first.model.repository.BabyRepository;
 import ro.danix.first.model.repository.user.BabyParentRepository;
@@ -57,7 +58,7 @@ public class BabyParentRepositoryImplIntegrationTest {
     public void setUp() {
         log.info("start setUp");
         DB database = mongo.getDB(MongoConfig.DATABASE_NAME);
-        DBCollection babyParent = database.getCollection("user");
+        DBCollection babyParent = database.getCollection(User.MONGO_COLLECTION);
         babyParent.remove(new BasicDBObject());        
     }
 

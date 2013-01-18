@@ -12,9 +12,11 @@ import ro.danix.first.model.domain.user.BabyParent;
  *
  * @author danix
  */
-@Document
+@Document(collection = "#{T(ro.danix.first.model.domain.Baby).MONGO_COLLECTION}")
 @EqualsAndHashCode(callSuper=true)
 public class Baby extends AbstractDocument {
+    
+    public static final String MONGO_COLLECTION = "baby";
     
     @Getter
     @Setter

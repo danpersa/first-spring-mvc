@@ -21,9 +21,11 @@ import ro.danix.first.model.domain.UserProfile;
 /**
  * @author danix
  */
-@Document(collection = "user")
+@Document(collection = "#{T(ro.danix.first.model.domain.user.User).MONGO_COLLECTION}")
 @Slf4j
 public class User extends AbstractDocument {
+    
+    public final static String MONGO_COLLECTION = "user";
 
     private final ExceptionUtils exceptionUtils = new ExceptionUtils();
 
