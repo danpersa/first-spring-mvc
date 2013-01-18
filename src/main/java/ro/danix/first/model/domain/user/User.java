@@ -21,7 +21,7 @@ import ro.danix.first.model.domain.UserProfile;
 /**
  * @author danix
  */
-@Document(collection = "#{T(ro.danix.first.model.domain.user.User).MONGO_COLLECTION}")
+@Document(collection = User.MONGO_COLLECTION)
 @Slf4j
 public class User extends AbstractDocument {
     
