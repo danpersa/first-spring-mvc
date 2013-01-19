@@ -1,5 +1,6 @@
 package ro.danix.first.model.domain.user;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,23 +14,25 @@ import ro.danix.first.model.domain.Baby;
  *
  * @author danix
  */
-@Document(collection = "user")
+@Document(collection = User.MONGO_COLLECTION)
 public class BabyParent extends User {
 
     private final ExceptionUtils exceptionUtils = new ExceptionUtils();
-    @DBRef
-    private Set<Baby> babies = new HashSet<Baby>();
+        
+    private Set<BigInteger> babiesIds = new HashSet<BigInteger>();
+    
     @Getter
     private Long babiesCount = 0l;
 
     public void addBaby(Baby baby) {
         exceptionUtils.argumentShouldNotBeNull(baby);
         exceptionUtils.documentsShouldNotBeTheSame(this, baby);
-        babies.add(baby);
+        exceptionUtils.argumentShouldNotBeNull(baby.getId());
+        babiesIds.add(baby.getId());
         babiesCount += 1;
     }
 
-    public Set<Baby> getBabies() {
-        return Collections.unmodifiableSet(babies);
+    public Set<BigInteger> getBabiesIds() {
+        return Collections.unmodifiableSet(babiesIds);
     }
 }

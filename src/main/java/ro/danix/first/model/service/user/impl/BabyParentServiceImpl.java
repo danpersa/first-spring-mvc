@@ -26,8 +26,7 @@ public class BabyParentServiceImpl extends GenericServiceImpl<BabyParent, BigInt
 
     @Override
     public void follow(BabyParent user, BabyParent follower) {
-        exceptionUtils.argumentShouldNotBeNull(user);
-        exceptionUtils.argumentShouldNotBeNull(follower);
+        exceptionUtils.argumentsShouldNotBeNull(user, follower);        
         user.addFollower(follower);
         follower.addFollowing(user);
         save(user);

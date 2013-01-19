@@ -15,6 +15,13 @@ public class ExceptionUtils {
             throw new NullArgumentException();
         }
     }
+    
+    public void documentMustHaveId(AbstractDocument abstractDocument){
+        argumentShouldNotBeNull(abstractDocument);
+        if(abstractDocument.getId() == null){
+            throw new DocumentWithoutIdException();                    
+        }
+    }
 
     public void argumentsShouldNotBeNull(Object... objects) {
         for (Object object : objects) {

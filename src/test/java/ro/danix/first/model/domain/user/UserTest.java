@@ -1,11 +1,13 @@
 package ro.danix.first.model.domain.user;
 
+import java.math.BigInteger;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 import ro.danix.first.model.domain.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.springframework.test.util.ReflectionTestUtils;
 import ro.danix.first.model.domain.Address;
 import ro.danix.test.FastRunningTests;
 
@@ -30,7 +32,9 @@ public class UserTest {
     public void addFollowerTest() {
         log.info("start addFollowerTest");
         User follower = new User();
+        ReflectionTestUtils.setField(follower, "id", new BigInteger("1"));
         User instance = new User();
+        ReflectionTestUtils.setField(instance, "id", new BigInteger("2"));
         instance.addFollower(follower);
 
         assertThat(instance.getFollowerIds(), hasItem(follower.getId()));
@@ -41,7 +45,9 @@ public class UserTest {
     public void addFollowingTest() {
         log.info("start addFollowingTest");
         User following = new User();
+        ReflectionTestUtils.setField(following, "id", new BigInteger("1"));
         User instance = new User();
+        ReflectionTestUtils.setField(instance, "id", new BigInteger("2"));
         instance.addFollowing(following);
 
         assertThat(instance.getFollowingIds(), hasItem(following.getId()));
