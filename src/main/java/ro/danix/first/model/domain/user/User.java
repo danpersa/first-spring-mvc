@@ -21,9 +21,11 @@ import ro.danix.first.model.domain.UserProfile;
 /**
  * @author danix
  */
-@Document(collection = "user")
+@Document(collection = User.MONGO_COLLECTION)
 @Slf4j
 public class User extends AbstractDocument {
+    
+    public final static String MONGO_COLLECTION = "user";
 
     private final ExceptionUtils exceptionUtils = new ExceptionUtils();
 
@@ -79,14 +81,14 @@ public class User extends AbstractDocument {
     }
 
     public void addFollower(User follower) {
-        exceptionUtils.argumentShouldNotBeNull(follower);
+        exceptionUtils.documentMustHaveId(follower);
         exceptionUtils.documentsShouldNotBeTheSame(this, follower);
         followerIds.add(follower.getId());
         followersCount += 1;
     }
 
     public void addFollowing(User followingUser) {
-        exceptionUtils.argumentShouldNotBeNull(followingUser);
+        exceptionUtils.documentMustHaveId(followingUser);
         exceptionUtils.documentsShouldNotBeTheSame(this, followingUser);
         followingIds.add(followingUser.getId());
         followingCount += 1;
