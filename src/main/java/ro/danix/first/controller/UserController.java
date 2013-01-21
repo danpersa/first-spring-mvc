@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/json", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody
     List<User> index() {
         List<User> users = userService.findAll();
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     // The user is loaded from the "user" URI variable via {@link UserConverter}
-    @RequestMapping(value = "/{user}/json", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{user}", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody
     User show(@PathVariable User user) {
         return user;
