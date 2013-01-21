@@ -81,14 +81,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
         return resolver;
     }
 
-//    @Bean
-    public FreeMarkerConfigurer freemarkerConfigurer() {
-        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
-        freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views");
-        freeMarkerConfigurer.setDefaultEncoding("ISO-8859-1");
-        return freeMarkerConfigurer;
-    }
-
     @Bean
     public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
         ContentNegotiatingViewResolver contentNegotiatingViewResolver = new ContentNegotiatingViewResolver();
