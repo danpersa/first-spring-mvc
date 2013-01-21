@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ro.danix.first.model.service.user.impl;
 
 import static org.junit.Assert.*;
@@ -51,7 +47,7 @@ public class BabyParentServiceImplTest {
     }
 
     @Test
-    public void testFollow() {
+    public void followTest() {
         // given
         log.info("start followTest");
 
