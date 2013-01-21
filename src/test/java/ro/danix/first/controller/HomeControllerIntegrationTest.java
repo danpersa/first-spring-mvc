@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ro.danix.first.config.ApplicationConfig;
-import ro.danix.first.config.WebConfig;
+import ro.danix.first.controller.config.WebConfig;
 import ro.danix.first.model.config.MongoConfig;
 import ro.danix.test.SlowRunningTests;
 

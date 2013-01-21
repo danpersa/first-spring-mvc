@@ -1,9 +1,8 @@
-package ro.danix.first.config;
+package ro.danix.first.controller.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,8 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -25,9 +25,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+import ro.danix.first.config.ApplicationConfig;
 import ro.danix.first.controller.converter.UserConverter;
 import ro.danix.first.model.service.user.UserService;
 
@@ -38,27 +38,23 @@ import ro.danix.first.model.service.user.UserService;
  * sub-classes of Spring MVC infrastructure components like {@code RequestMappingHandlerMapping},
  * {@code RequestMappingHandlerAdapter}, etc.
  *
- * <p>Typically extending from {@link WebMvcConfigurerAdapter} and adding  {@code
+ * <p>Typically extending from {@link WebMvcConfigurerAdapter} and adding null {@code
  *
  * @EnableWebMvc} is sufficient.
  *
  */
 @Configuration
-@ComponentScan(basePackages = {"ro.danix.first.controller", "ro.danix.first.model.config"})
+@ComponentScan(basePackages = {"ro.danix.first.controller"})
 public class WebConfig extends WebMvcConfigurationSupport {
 
     @Autowired
     MappingJacksonHttpMessageConverter mappingJacksonHttpMessageConverter;
-
     @Autowired
     StringHttpMessageConverter stringHttpMessageConverter;
-
     @Autowired
     ByteArrayHttpMessageConverter byteArrayHttpMessageConverter;
-
     @Autowired
     private ApplicationConfig applicationConfig;
-
     @Autowired
     private UserService userService;
 
@@ -81,16 +77,26 @@ public class WebConfig extends WebMvcConfigurationSupport {
         return resolver;
     }
 
+    public ContentNegotiationManager contentNegotiationManager() {
+        ContentNegotiationManagerFactoryBean contentNegotiationManagerFactoryBean = new ContentNegotiationManagerFactoryBean();
+        contentNegotiationManagerFactoryBean.setDefaultContentType(MediaType.APPLICATION_JSON);
+
+        Properties mediaTypes = new Properties();
+        mediaTypes.setProperty("json", MediaType.APPLICATION_JSON_VALUE);
+        contentNegotiationManagerFactoryBean.setMediaTypes(mediaTypes);
+        try {
+            return contentNegotiationManagerFactoryBean.getObject();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+
     @Bean
     public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
         ContentNegotiatingViewResolver contentNegotiatingViewResolver = new ContentNegotiatingViewResolver();
-        Map<String, String> mediaTypes = new HashMap<String, String>();
-        mediaTypes.put("plain", MediaType.TEXT_PLAIN_VALUE);
-        mediaTypes.put("json", MediaType.APPLICATION_JSON_VALUE);
-        mediaTypes.put("xml", MediaType.APPLICATION_XML_VALUE);
-        mediaTypes.put("html", MediaType.TEXT_HTML_VALUE);
-        contentNegotiatingViewResolver.setMediaTypes(mediaTypes);
-        contentNegotiatingViewResolver.setDefaultContentType(MediaType.TEXT_PLAIN);
+
+        contentNegotiatingViewResolver.setContentNegotiationManager(contentNegotiationManager());
 
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
         contentNegotiatingViewResolver.setViewResolvers(viewResolvers);
@@ -114,6 +120,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
         UserConverter userConverter = new UserConverter(userService);
         registry.addConverter(userConverter);
     }
+    
+    
 
     // Configuration for the interceptor logging HandlerMethod information
     // See ~.handlermethodinterceptor
