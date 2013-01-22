@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import javax.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
@@ -20,9 +21,11 @@ public final class EmailAddress {
 
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
+    @NotEmpty
+    @Size(min = 4, max = 30)
     @Getter
     @Field("email")
-    private final String value;
+    private String value;
 
     /**
      * Creates a new {@link EmailAddress} from the given {@link String}
@@ -33,6 +36,9 @@ public final class EmailAddress {
     public EmailAddress(String emailAddress) {
         Assert.isTrue(isValid(emailAddress), "Invalid email address!");
         this.value = emailAddress;
+    }
+
+    protected EmailAddress() {
     }
 
     /**

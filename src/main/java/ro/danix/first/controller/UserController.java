@@ -59,13 +59,14 @@ public class UserController {
         return users;
     }
 
+    /** 
+     * curl --user admin@fake.com:adminpass -H "Content-Type: application/json" -i --data '{ "username":"danix", "lastname":"lastname" }' http://localhost:8900/users
+     **/
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody
-    User create(@Valid @ModelAttribute User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return null;
-        }
-        userService.save(user);
+    User create(@RequestBody User user) throws FormValidationError {
+        validate("user", user);
+        user = userService.save(user);
         return user;
     }
 
@@ -133,6 +134,7 @@ public class UserController {
             for (int index = 0; index < fieldErrorCodes.length; index++) {
                 String fieldErrorCode = fieldErrorCodes[index];
 
+                log.debug("Get localized message for fieldErrorCode: {} with argument: {}", fieldErrorCode, fieldError.getArguments());
                 String localizedError = messageSource.getMessage(fieldErrorCode, fieldError.getArguments(), current);
                 if (localizedError != null && !localizedError.equals(fieldErrorCode)) {
                     log.debug("Adding error message: {} to field: {}", localizedError, fieldError.getField());
