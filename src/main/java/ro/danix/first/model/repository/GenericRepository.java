@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface GenericRepository<T, R extends Serializable> extends MongoRepository<T, R> {
     
+    T update(R id, T entity);
+    
     @Override
     public List<T> findAll(Iterable<R> ids);
     

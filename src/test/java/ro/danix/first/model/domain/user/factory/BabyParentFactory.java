@@ -24,6 +24,7 @@ public class BabyParentFactory extends AbstractFactory<BabyParent> {
     @Override
     protected BabyParent init() {
         BabyParent babyParent = new BabyParent();
+        babyParent.setUsername(USERNAME);
         babyParent.setFirstname(FIRST_NAME);
         babyParent.setLastname(LAST_NAME);
         babyParent.setEmailAddress(new EmailAddress(EMAIL));

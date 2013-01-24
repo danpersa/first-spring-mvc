@@ -56,6 +56,12 @@ public class GenericMongoRepository<T, R extends Serializable> implements Generi
         operations.save(entity);
         return entity;
     }
+    
+    
+    @Override
+    public T update(R id, T entity) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public List<T> findAll() {

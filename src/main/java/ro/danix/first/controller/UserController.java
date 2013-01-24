@@ -1,5 +1,6 @@
 package ro.danix.first.controller;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -65,11 +66,11 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping(value = "/{user}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     @ResponseBody
-    public User update(@RequestBody User user) throws FormValidationError {
+    public User update(@PathVariable("userId") final BigInteger userId, @RequestBody User user) throws FormValidationError {
         validationUtils.validate("user", user);
-        user = userService.save(user);
+        user = userService.update(userId, user);
         return user;
     }
 

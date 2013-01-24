@@ -30,6 +30,11 @@ public class GenericServiceImpl<T, R extends Serializable> implements GenericSer
     public <S extends T> S save(S entity) {
         return genericRepository.save(entity);
     }
+    
+    @Override
+    public T update(R id, T entity) {
+        return genericRepository.update(id, entity);
+    }
 
     @Override
     public List<T> findAll() {
