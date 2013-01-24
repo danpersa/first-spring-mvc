@@ -10,7 +10,6 @@ import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.PrintingResultHandler;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.domain.user.factory.UserFactory;
@@ -22,7 +21,7 @@ import ro.danix.test.FastRunningTests;
  * @author danix
  */
 @Category({FastRunningTests.class})
-public class UserControllerIntegrationTest {
+public class UserControllerTest {
 
     private UserService userService;
 
