@@ -6,7 +6,7 @@ import lombok.Getter;
  *
  * @author danix
  */
-public class UserProfile extends AbstractDocument {
+public class UserProfile {
 
     @Getter
     private String name;

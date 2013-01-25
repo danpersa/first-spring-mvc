@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,13 +16,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import ro.danix.first.exception.ExceptionUtils;
+import ro.danix.first.model.domain.AbstractDocument;
 import ro.danix.first.model.repository.GenericRepository;
 
 /**
  *
  * @author danix
  */
-public class GenericMongoRepository<T, R extends Serializable> implements GenericRepository<T, R> {
+public class GenericMongoRepository<T extends AbstractDocument, R extends BigInteger> implements GenericRepository<T, R> {
 
     protected final MongoOperations operations;
 
@@ -60,7 +62,10 @@ public class GenericMongoRepository<T, R extends Serializable> implements Generi
     
     @Override
     public T update(R id, T entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        exceptionUtils.argumentsShouldNotBeNull(id, entity);
+        entity.setId(id);
+        operations.save(entity);
+        return entity;
     }
 
     @Override
