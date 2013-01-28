@@ -3,10 +3,13 @@ package ro.danix.first.controller;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,7 @@ import ro.danix.first.controller.dto.FormValidationErrorDTO;
 import ro.danix.first.controller.editor.UserEditor;
 import ro.danix.first.controller.exception.FormValidationError;
 import ro.danix.first.controller.exception.UserNotFoundException;
+import ro.danix.first.controller.util.QueryUtils;
 import ro.danix.first.controller.util.ValidationUtils;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.service.user.UserService;
@@ -33,16 +37,22 @@ public class UserController {
 
     @Autowired
     private ValidationUtils validationUtils;
+    
+    @Autowired
+    private QueryUtils queryUtils;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    // http://localhost:8900/users/?page=0&size=10&sortBy=username&sortOrder=ASC
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody
-    List<User> index() {
-        List<User> users = userService.findAll();
+    Page<User> findAllPaginatedAndSorted(@RequestParam(value = QueryUtils.PAGE) final int page, @RequestParam(value = QueryUtils.SIZE) final int size,
+            @RequestParam(value = QueryUtils.SORT_BY) final String sortBy, @RequestParam(value = QueryUtils.SORT_ORDER) final String sortOrder) {
+        Pageable pageable = queryUtils.createPagination(page, size, sortBy, sortOrder);
+        Page<User> users = userService.findAll(pageable);
         return users;
     }
 
