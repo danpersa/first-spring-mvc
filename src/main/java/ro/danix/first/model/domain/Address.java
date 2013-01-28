@@ -12,8 +12,10 @@ import org.springframework.util.Assert;
 public class Address {
 
     @Getter
-    private final String street, city, state, country, zipCode;
+    private String street, city, state, country, zipCode;
 
+    public Address() {
+    }
     /**
      * Creates a new {@link Address} from the given street, city and country.
      *

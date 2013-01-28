@@ -1,6 +1,7 @@
 package ro.danix.first.model.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -13,6 +14,9 @@ public class UserProfile {
 
     @Getter
     private String website;
+
+    public UserProfile() {
+    }
 
     public UserProfile(String name, String website) {
         this.name = name;
