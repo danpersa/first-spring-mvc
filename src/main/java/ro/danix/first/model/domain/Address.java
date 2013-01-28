@@ -14,7 +14,7 @@ public class Address {
     @Getter
     private String street, city, state, country, zipCode;
 
-    public Address() {
+    protected Address() {
     }
     /**
      * Creates a new {@link Address} from the given street, city and country.

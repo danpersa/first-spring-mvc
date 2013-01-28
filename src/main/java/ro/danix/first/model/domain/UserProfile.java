@@ -15,7 +15,7 @@ public class UserProfile {
     @Getter
     private String website;
 
-    public UserProfile() {
+    protected UserProfile() {
     }
 
     public UserProfile(String name, String website) {

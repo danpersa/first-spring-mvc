@@ -1,25 +1,24 @@
 package ro.danix.first.controller;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import ro.danix.first.controller.config.WebConfig;
+import org.springframework.validation.FieldError;
+import ro.danix.first.controller.dto.FormValidationErrorDTO;
+import ro.danix.first.controller.exception.FormValidationError;
 import ro.danix.first.controller.util.ValidationUtils;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.domain.user.factory.UserFactory;
@@ -39,12 +38,14 @@ public class UserControllerTest {
 
     private MockMvc mockMvc;
 
+    private ValidationUtils validationUtils;
+
     private UserFactory userFactory = new UserFactory();
 
     @Before
     public void setup() {
         userService = mock(UserService.class);
-        ValidationUtils validationUtils = mock(ValidationUtils.class);
+        validationUtils = mock(ValidationUtils.class);
         UserController userController = new UserController(userService);
         ReflectionTestUtils.setField(userController, "validationUtils", validationUtils);
         User user = userFactory.build();
@@ -72,10 +73,9 @@ public class UserControllerTest {
 
     @Test
     public void createSuccessTest() throws Exception {
-        User user = userFactory.build();
+        User user = new User(null, null);
         User savedUser = userFactory.build();
         savedUser.setId(BigInteger.ONE);
-        userService.save(user);
         when(userService.save(user)).thenReturn(savedUser);
 
         log.debug("Send: " + IntegrationTestUtil.convertObjectToJson(user));
@@ -88,5 +88,36 @@ public class UserControllerTest {
                 .andExpect(jsonPath("id", is(new Integer(1))))
                 .andExpect(jsonPath("username", is(UserFactory.USERNAME)))
                 .andExpect(jsonPath("lastname", is(UserFactory.LAST_NAME)));
+        verify(validationUtils).validate("user", user);
+        verify(userService).save(user);
+    }
+
+    @Test
+    public void createFailureTest() throws Exception {
+        User user = new User(null, null);
+        User savedUser = userFactory.build();
+        savedUser.setId(BigInteger.ONE);
+        
+        when(userService.save(user)).thenReturn(savedUser);
+        List<FieldError> fieldErrors = new ArrayList<FieldError>();
+        FormValidationError formValidationError = new FormValidationError(fieldErrors);
+        doThrow(formValidationError).when(validationUtils).validate(isA(String.class), isA(User.class));
+        FormValidationErrorDTO formValidationErrorDTO = new FormValidationErrorDTO();
+        formValidationErrorDTO.addFieldError("user.username", "should not be null");
+        when(validationUtils.handleFormValidationError(formValidationError)).thenReturn(formValidationErrorDTO);
+
+        log.debug("Send: " + IntegrationTestUtil.convertObjectToJson(user));
+        mockMvc.perform(post("/users")
+                .contentType(IntegrationTestUtil.APPLICATION_JSON)
+                .content(IntegrationTestUtil.convertObjectToJsonBytes(user)))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(content().contentType(IntegrationTestUtil.APPLICATION_JSON))
+                .andExpect(content().string(startsWith("{\"fieldErrors\":")))
+                .andExpect(jsonPath("$['fieldErrors'][0]['path']", is("user.username")))
+                .andExpect(jsonPath("$['fieldErrors'][0]['message']", is("should not be null")));
+        verify(validationUtils).validate("user", user);
+        verifyZeroInteractions(userService);
+        verify(validationUtils).handleFormValidationError(formValidationError);
     }
 }
