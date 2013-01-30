@@ -14,12 +14,12 @@ public class UserToUserCreateOutTransformer implements Transformer<User, UserCre
 
     @Override
     public UserCreateOut apply(User input) {
-        UserCreateOut userCreateResourceOut = new UserCreateOut();
-        userCreateResourceOut.setEmailAddress(input.getEmailAddress().getValue());
-        userCreateResourceOut.setFirstname(input.getFirstname());
-        userCreateResourceOut.setId(input.getId());
-        userCreateResourceOut.setLastname(input.getLastname());
-        userCreateResourceOut.setUsername(input.getUsername());
-        return userCreateResourceOut;
+        UserCreateOut userCreateOut = new UserCreateOut();
+        userCreateOut.setEmailAddress(input.getEmailAddress().getValue());
+        userCreateOut.setFirstname(input.getFirstname());
+        userCreateOut.setId(input.getId());
+        userCreateOut.setLastname(input.getLastname());
+        userCreateOut.setUsername(input.getUsername());
+        return userCreateOut;
     }
 }

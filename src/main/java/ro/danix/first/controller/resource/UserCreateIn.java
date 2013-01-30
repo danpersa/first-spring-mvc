@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
+import ro.danix.first.controller.validation.EmailExistsConstraint;
 
 /**
  *
@@ -29,7 +30,7 @@ public class UserCreateIn {
     @Setter
     private String lastname;
 
-    @Valid
+    @EmailExistsConstraint
     @NotNull
     @Getter
     @Setter
