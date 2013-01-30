@@ -27,13 +27,13 @@ import ro.danix.first.model.domain.UserProfile;
 @Document(collection = User.MONGO_COLLECTION)
 @Slf4j
 public class User extends AbstractDocument {
-    
+
     public final static String MONGO_COLLECTION = "user";
 
     private final ExceptionUtils exceptionUtils = new ExceptionUtils();
 
     @NotEmpty
-    @Size(min=4, max = 15)
+    @Size(min = 4, max = 15)
     @Getter
     @Setter
     @Indexed(unique = true)

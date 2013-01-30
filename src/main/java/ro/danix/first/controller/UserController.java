@@ -3,22 +3,26 @@ package ro.danix.first.controller;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ro.danix.first.controller.dto.FormValidationErrorDTO;
 import ro.danix.first.controller.editor.UserEditor;
 import ro.danix.first.controller.exception.FormValidationError;
 import ro.danix.first.controller.exception.UserNotFoundException;
+import ro.danix.first.controller.resource.UserCreateIn;
+import ro.danix.first.controller.resource.UserCreateOut;
+import ro.danix.first.controller.transformer.user.UserCreateInToUserTransformer;
+import ro.danix.first.controller.transformer.user.UserToUserCreateOutTransformer;
 import ro.danix.first.controller.util.QueryUtils;
 import ro.danix.first.controller.util.ValidationUtils;
 import ro.danix.first.model.domain.user.User;
@@ -40,6 +44,12 @@ public class UserController {
     
     @Autowired
     private QueryUtils queryUtils;
+    
+    @Autowired
+    private UserCreateInToUserTransformer userCreateInToUserTransformer;
+    
+    @Autowired
+    private UserToUserCreateOutTransformer userToUserCreateOutTransformer;
 
     @Autowired
     public UserController(UserService userService) {
@@ -56,18 +66,15 @@ public class UserController {
         return users;
     }
 
-    /**
-     * curl --user admin@fake.com:adminpass -H "Content-Type: application/json"
-     * -i --data '{ "username":"danix", "lastname":"lastname" }'
-     * http://localhost:8900/users
-     *
-     */
+
+    // curl --user admin@fake.com:adminpass -H "Content-Type: application/json" -i --data '{ "username":"danix", "lastname":"lastname" }' http://localhost:8900/users
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public User create(@RequestBody User user) throws FormValidationError {
-        validationUtils.validate("user", user);
+    public UserCreateOut create(@Valid @RequestBody UserCreateIn userCreateIn, BindingResult result) throws FormValidationError {
+        validationUtils.checkForValidationErrors(userCreateIn, result);
+        User user = userCreateInToUserTransformer.apply(userCreateIn);
         user = userService.save(user);
-        return user;
+        return userToUserCreateOutTransformer.apply(user);
     }
 
     @RequestMapping(value = "/{user}", method = RequestMethod.GET, produces = "application/json")

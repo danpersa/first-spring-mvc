@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import ro.danix.first.controller.dto.FormValidationErrorDTO;
@@ -25,7 +26,7 @@ public class ValidationUtils {
 
     @Autowired
     private MessageSource messageSource;
-    
+
     @Autowired
     private Validator validator;
 
@@ -59,7 +60,7 @@ public class ValidationUtils {
 
         return dto;
     }
-    
+
     public void validate(String objectName, Object validated) throws FormValidationError {
         log.debug("Validating object: " + validated);
 
@@ -69,6 +70,13 @@ public class ValidationUtils {
         if (bindingResult.hasErrors()) {
             log.debug("Validation errors found:" + bindingResult.getFieldErrors());
             throw new FormValidationError(bindingResult.getFieldErrors());
+        }
+    }
+
+    public void checkForValidationErrors(Object validated, BindingResult result) throws FormValidationError {
+        if (result.hasErrors()) {
+            FormValidationError fve = new FormValidationError(result.getFieldErrors());
+            throw fve;
         }
     }
 
