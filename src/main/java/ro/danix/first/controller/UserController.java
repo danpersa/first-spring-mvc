@@ -25,6 +25,7 @@ import ro.danix.first.controller.transformer.user.UserDtoInToUserTransformer;
 import ro.danix.first.controller.transformer.user.UserToUserDtoOutTransformer;
 import ro.danix.first.controller.util.QueryUtils;
 import ro.danix.first.controller.util.ValidationUtils;
+import ro.danix.first.exception.DocumentWithIdNotFoundException;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.service.user.UserService;
 
@@ -114,7 +115,13 @@ public class UserController {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleTodoNotFoundException(UserNotFoundException ex) {
+    public void handleUserNotFoundException(UserNotFoundException ex) {
         log.debug("handling 404 error on a todo entry");
+    }
+    
+    @ExceptionHandler(DocumentWithIdNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleDocumentWithIdNotFoundException(DocumentWithIdNotFoundException ex) {
+        log.debug("handling 404 error on a user with id {} entry", ex.getId());
     }
 }

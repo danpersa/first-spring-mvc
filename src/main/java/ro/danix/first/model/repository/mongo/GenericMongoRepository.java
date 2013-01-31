@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
+import ro.danix.first.exception.DocumentWithIdNotFoundException;
 import ro.danix.first.exception.ExceptionUtils;
 import ro.danix.first.model.domain.AbstractDocument;
 import ro.danix.first.model.repository.GenericRepository;
@@ -63,6 +64,10 @@ public class GenericMongoRepository<T extends AbstractDocument, R extends BigInt
     @Override
     public T update(R id, T entity) {
         exceptionUtils.argumentsShouldNotBeNull(id, entity);
+        T t = findOne(id);
+        if (t == null) {
+            throw new DocumentWithIdNotFoundException(id);
+        }
         entity.setId(id);
         operations.save(entity);
         return entity;
