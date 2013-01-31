@@ -8,7 +8,7 @@ import lombok.Setter;
  *
  * @author danix
  */
-public class UserCreateOut extends UserCreateIn {
+public class UserDtoOut extends UserDtoIn {
 
     @Getter
     @Setter

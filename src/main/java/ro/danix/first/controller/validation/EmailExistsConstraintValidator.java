@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.danix.first.controller.dto.user.UserCreateIn;
+import ro.danix.first.controller.dto.user.UserDtoIn;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
 import ro.danix.first.model.service.user.UserService;

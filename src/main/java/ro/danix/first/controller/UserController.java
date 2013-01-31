@@ -19,10 +19,10 @@ import ro.danix.first.controller.dto.FormValidationErrorDTO;
 import ro.danix.first.controller.editor.UserEditor;
 import ro.danix.first.controller.exception.FormValidationError;
 import ro.danix.first.controller.exception.UserNotFoundException;
-import ro.danix.first.controller.dto.user.UserCreateIn;
-import ro.danix.first.controller.dto.user.UserCreateOut;
-import ro.danix.first.controller.transformer.user.UserCreateInToUserTransformer;
-import ro.danix.first.controller.transformer.user.UserToUserCreateOutTransformer;
+import ro.danix.first.controller.dto.user.UserDtoIn;
+import ro.danix.first.controller.dto.user.UserDtoOut;
+import ro.danix.first.controller.transformer.user.UserDtoInToUserTransformer;
+import ro.danix.first.controller.transformer.user.UserToUserDtoOutTransformer;
 import ro.danix.first.controller.util.QueryUtils;
 import ro.danix.first.controller.util.ValidationUtils;
 import ro.danix.first.model.domain.user.User;
@@ -41,15 +41,15 @@ public class UserController {
 
     @Autowired
     private ValidationUtils validationUtils;
-    
+
     @Autowired
     private QueryUtils queryUtils;
-    
+
     @Autowired
-    private UserCreateInToUserTransformer userCreateInToUserTransformer;
-    
+    private UserDtoInToUserTransformer userDtoInToUserTransformer;
+
     @Autowired
-    private UserToUserCreateOutTransformer userToUserCreateOutTransformer;
+    private UserToUserDtoOutTransformer userToUserDtoOutTransformer;
 
     @Autowired
     public UserController(UserService userService) {
@@ -66,15 +66,14 @@ public class UserController {
         return users;
     }
 
-
     // curl --user admin@fake.com:adminpass -H "Content-Type: application/json" -i --data '{ "username":"danix", "lastname":"lastname" }' http://localhost:8900/users
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public UserCreateOut create(@Valid @RequestBody UserCreateIn userCreateIn, BindingResult result) throws FormValidationError {
-        validationUtils.checkForValidationErrors(userCreateIn, result);
-        User user = userCreateInToUserTransformer.apply(userCreateIn);
+    public UserDtoOut create(@Valid @RequestBody UserDtoIn userDtoIn, BindingResult result) throws FormValidationError {
+        validationUtils.checkForValidationErrors(userDtoIn, result);
+        User user = userDtoInToUserTransformer.apply(userDtoIn);
         user = userService.save(user);
-        return userToUserCreateOutTransformer.apply(user);
+        return userToUserDtoOutTransformer.apply(user);
     }
 
     @RequestMapping(value = "/{user}", method = RequestMethod.GET, produces = "application/json")
@@ -85,10 +84,11 @@ public class UserController {
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     @ResponseBody
-    public User update(@PathVariable("userId") final BigInteger userId, @RequestBody User user) throws FormValidationError {
-        validationUtils.validate("user", user);
+    public UserDtoOut update(@PathVariable("userId") final BigInteger userId, @Valid @RequestBody UserDtoIn userDtoIn, BindingResult result) throws FormValidationError {
+        validationUtils.checkForValidationErrors(userDtoIn, result);
+        User user = userDtoInToUserTransformer.apply(userDtoIn);
         user = userService.update(userId, user);
-        return user;
+        return userToUserDtoOutTransformer.apply(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

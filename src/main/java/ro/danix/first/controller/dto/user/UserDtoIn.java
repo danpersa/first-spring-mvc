@@ -12,7 +12,7 @@ import ro.danix.first.controller.validation.EmailExistsConstraint;
  *
  * @author danix
  */
-public class UserCreateIn {
+public class UserDtoIn {
 
     @NotEmpty
     @Size(min = 4, max = 15)
