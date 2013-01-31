@@ -1,4 +1,4 @@
-package ro.danix.first.controller.resource;
+package ro.danix.first.controller.dto.user;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

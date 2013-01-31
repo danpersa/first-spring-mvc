@@ -1,4 +1,4 @@
-package ro.danix.first.controller.resource;
+package ro.danix.first.controller.dto.user;
 
 import java.math.BigInteger;
 import lombok.Getter;

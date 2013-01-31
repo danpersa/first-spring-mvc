@@ -1,7 +1,7 @@
 package ro.danix.first.controller.transformer.user;
 
 import org.springframework.stereotype.Component;
-import ro.danix.first.controller.resource.UserCreateIn;
+import ro.danix.first.controller.dto.user.UserCreateIn;
 import ro.danix.first.controller.transformer.Transformer;
 import ro.danix.first.model.domain.EmailAddress;
 import ro.danix.first.model.domain.user.User;
