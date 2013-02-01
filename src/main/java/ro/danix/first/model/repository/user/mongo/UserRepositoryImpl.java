@@ -18,7 +18,7 @@ import ro.danix.first.model.repository.user.UserRepository;
  *
  * @author danix
  */
-@Repository
+@Repository("userRepository")
 public class UserRepositoryImpl extends GenericMongoRepository<User, BigInteger> implements UserRepository {
 
     @Autowired

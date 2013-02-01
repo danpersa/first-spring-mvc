@@ -38,6 +38,7 @@ import ro.danix.first.model.service.user.UserService;
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -51,11 +52,6 @@ public class UserController {
 
     @Autowired
     private UserToUserDtoOutTransformer userToUserDtoOutTransformer;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     // http://localhost:8900/users/?page=0&size=10&sortBy=username&sortOrder=ASC
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")

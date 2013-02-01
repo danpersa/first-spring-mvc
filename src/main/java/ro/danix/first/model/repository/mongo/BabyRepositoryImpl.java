@@ -17,7 +17,7 @@ import ro.danix.first.model.repository.BabyRepository;
  *
  * @author danix
  */
-@Repository
+@Repository("babyRepository")
 public class BabyRepositoryImpl extends GenericMongoRepository<Baby, BigInteger> implements BabyRepository {
 
     @Autowired
