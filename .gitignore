@@ -4,3 +4,5 @@
 nbproject/
 target/
 .idea/
+*.iml
+nb-configuration.xml
